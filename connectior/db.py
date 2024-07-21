@@ -1,8 +1,9 @@
 import sqlite3
 
 import click
-from flask import current_app, g
+from flask import current_app, g, Blueprint
 
+bp = Blueprint('database', __name__)
 
 def get_db():
     if 'db' not in g:
@@ -29,12 +30,22 @@ def init_db():
         db.executescript(f.read().decode('utf8'))
 
 
-@click.command('init-db')
+@bp.cli.command('init')
 def init_db_command():
     """Clear the existing data and create new tables."""
     init_db()
     click.echo('Initialized the database.')
 
+
+@bp.cli.command('fill')
+def fill_db_command():
+    """Fill the database with test data."""
+    db = get_db()
+
+    with current_app.open_resource('schema-fill.sql') as f:
+        db.executescript(f.read().decode('utf8'))
+
+    click.echo('Filled the database.')
 
 def init_app(app):
     app.teardown_appcontext(close_db)

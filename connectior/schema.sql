@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(256) NOT NULL,
     first_name VARCHAR(16) NOT NULL,
     last_name VARCHAR(16),
-    nickname VARCHAR(32) NOT NULL
+    nickname VARCHAR(16) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS chats (
@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS chats (
     user_2 INTEGER NOT NULL,
     FOREIGN KEY (user_1) REFERENCES users (id),
     FOREIGN KEY (user_2) REFERENCES users (id)
+);
 );
 
 CREATE TABLE IF NOT EXISTS messages (
