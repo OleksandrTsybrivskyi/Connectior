@@ -3,6 +3,8 @@ import sqlite3
 import click
 from flask import current_app, g, Blueprint
 
+import os
+
 bp = Blueprint('database', __name__)
 
 def get_db():
@@ -23,18 +25,21 @@ def close_db(e=None):
         db.close()
 
 
-def init_db():
+def create_db():
     db = get_db()
 
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
+def delete_db():
+    if os.path.exists(current_app.config['DATABASE']):
+        os.remove(current_app.config['DATABASE'])
 
-@bp.cli.command('init')
-def init_db_command():
+@bp.cli.command('create')
+def create_db_command():
     """Clear the existing data and create new tables."""
-    init_db()
-    click.echo('Initialized the database.')
+    create_db()
+    click.echo('Successfully create database.')
 
 
 @bp.cli.command('fill')
@@ -45,8 +50,25 @@ def fill_db_command():
     with current_app.open_resource('schema-fill.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
-    click.echo('Filled the database.')
+    click.echo('Successfully fill the database with test data.')
+
+@bp.cli.command('delete')
+def delete_db_command():
+    """Delete database file if exist"""
+
+    delete_db()
+
+    click.echo('Successfully deleted database file.')
+
+@bp.cli.command('reset')
+def clear_db_command():
+    """Delete old database file and create a new one."""
+
+    delete_db()
+    create_db()
+
+    click.echo('Succesfully reset database')
 
 def init_app(app):
     app.teardown_appcontext(close_db)
-    app.cli.add_command(init_db_command)
+    app.cli.add_command(create_db_command)

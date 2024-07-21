@@ -37,7 +37,7 @@ INSERT INTO chats (user_1, user_2) VALUES
 
 -- Inserting messages
 -- Messages for chat between Nazar and Oleksandr
-INSERT INTO messages (sender, chat_id, body) VALUES
+INSERT INTO messages (sender_id, chat_id, body) VALUES
 ((SELECT id FROM users WHERE nickname = 'Nazar'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Nazar') AND user_2 = (SELECT id FROM users WHERE nickname = 'Oleksandr')), 'Hi Oleksandr!'),
 ((SELECT id FROM users WHERE nickname = 'Oleksandr'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Nazar') AND user_2 = (SELECT id FROM users WHERE nickname = 'Oleksandr')), 'Hello Nazar!'),
 ((SELECT id FROM users WHERE nickname = 'Nazar'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Nazar') AND user_2 = (SELECT id FROM users WHERE nickname = 'Oleksandr')), 'How are you today?'),
@@ -65,59 +65,53 @@ INSERT INTO messages (sender, chat_id, body) VALUES
 ((SELECT id FROM users WHERE nickname = 'Nazar'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Nazar') AND user_2 = (SELECT id FROM users WHERE nickname = 'Oleksandr')), 'See you tomorrow.');
 
 -- Messages for chats between team members
-INSERT INTO messages (sender, chat_id, body) VALUES
+INSERT INTO messages (sender_id, chat_id, body) VALUES
 ((SELECT id FROM users WHERE nickname = 'Nazar'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Nazar') AND user_2 = (SELECT id FROM users WHERE nickname = 'Oleksandr')), 'Hi Oleksandr!'),
-((SELECT id FROM users WHERE nickname = 'Oleksandr'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Nazar') AND user_2 = (SELECT id FROM users WHERE nickname = 'Oleksandr')), 'Hello Nazar!'),
+((SELECT id FROM users WHERE nickname = 'Oleksandr'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Nazar') AND user_2 = (SELECT id FROM users WHERE nickname = 'Oleksandr')), 'Hello Nazar!');
+INSERT INTO messages (sender_id, chat_id, body) VALUES
 ((SELECT id FROM users WHERE nickname = 'Nazar'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Nazar') AND user_2 = (SELECT id FROM users WHERE nickname = 'Volodia')), 'Hey Volodia, what’s up?'),
-((SELECT id FROM users WHERE nickname = 'Volodia'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Nazar') AND user_2 = (SELECT id FROM users WHERE nickname = 'Volodia')), 'Not much, just working.'),
-((SELECT id FROM users WHERE nickname = 'Daryna'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Nazar') AND user_2 = (SELECT id FROM users WHERE nickname = 'Daryna')), 'Hi Nazar, I need some help with the project.'),
-((SELECT id FROM users WHERE nickname = 'Nazar'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Daryna') AND user_2 = (SELECT id FROM users WHERE nickname = 'Nazar')), 'Sure Daryna, what do you need?'),
-((SELECT id FROM users WHERE nickname = 'Oleksandr'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Oleksandr') AND user_2 = (SELECT id FROM users WHERE nickname = 'Volodia')), 'Hi Volodia!'),
-((SELECT id FROM users WHERE nickname = 'Volodia'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Oleksandr') AND user_2 = (SELECT id FROM users WHERE nickname = 'Volodia')), 'Hello Oleksandr!'),
-((SELECT id FROM users WHERE nickname = 'Daryna'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Daryna') AND user_2 = (SELECT id FROM users WHERE nickname = 'Volodia')), 'Hey Volodia, are you free this weekend?'),
-((SELECT id FROM users WHERE nickname = 'Volodia'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Daryna') AND user_2 = (SELECT id FROM users WHERE nickname = 'Daryna')), 'Sure Daryna, let’s talk later.'),
-((SELECT id FROM users WHERE nickname = 'Nazar'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Nazar') AND user_2 = (SELECT id FROM users WHERE nickname = 'Daryna')), 'Any updates on the project?'),
-((SELECT id FROM users WHERE nickname = 'Daryna'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Nazar') AND user_2 = (SELECT id FROM users WHERE nickname = 'Daryna')), 'I’m working on the design now.');
+((SELECT id FROM users WHERE nickname = 'Volodia'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'Nazar') AND user_2 = (SELECT id FROM users WHERE nickname = 'Volodia')), 'Not much, just working.');
 
+-- ERROR WAS HERE
 
 -- Messages for chats between generic users
 -- Chat between user5 and user6
-INSERT INTO messages (sender, chat_id, body) VALUES
+INSERT INTO messages (sender_id, chat_id, body) VALUES
 ((SELECT id FROM users WHERE nickname = 'user5'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user5') AND user_2 = (SELECT id FROM users WHERE nickname = 'user6')), 'Hello user6!'),
 ((SELECT id FROM users WHERE nickname = 'user6'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user5') AND user_2 = (SELECT id FROM users WHERE nickname = 'user6')), 'Hi user5!'),
 ((SELECT id FROM users WHERE nickname = 'user5'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user5') AND user_2 = (SELECT id FROM users WHERE nickname = 'user6')), 'How are you?'),
 ((SELECT id FROM users WHERE nickname = 'user6'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user5') AND user_2 = (SELECT id FROM users WHERE nickname = 'user6')), 'I’m good, thanks. What about you?');
 
 -- Chat between user5 and user7
-INSERT INTO messages (sender, chat_id, body) VALUES
+INSERT INTO messages (sender_id, chat_id, body) VALUES
 ((SELECT id FROM users WHERE nickname = 'user5'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user5') AND user_2 = (SELECT id FROM users WHERE nickname = 'user7')), 'Hi user7!'),
 ((SELECT id FROM users WHERE nickname = 'user7'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user5') AND user_2 = (SELECT id FROM users WHERE nickname = 'user7')), 'Hello user5!'),
 ((SELECT id FROM users WHERE nickname = 'user5'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user5') AND user_2 = (SELECT id FROM users WHERE nickname = 'user7')), 'What’s new?'),
 ((SELECT id FROM users WHERE nickname = 'user7'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user5') AND user_2 = (SELECT id FROM users WHERE nickname = 'user7')), 'Not much, just relaxing.');
 
 -- Chat between user5 and user8
-INSERT INTO messages (sender, chat_id, body) VALUES
+INSERT INTO messages (sender_id, chat_id, body) VALUES
 ((SELECT id FROM users WHERE nickname = 'user5'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user5') AND user_2 = (SELECT id FROM users WHERE nickname = 'user8')), 'Hello user8!'),
 ((SELECT id FROM users WHERE nickname = 'user8'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user5') AND user_2 = (SELECT id FROM users WHERE nickname = 'user8')), 'Hi user5!'),
 ((SELECT id FROM users WHERE nickname = 'user5'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user5') AND user_2 = (SELECT id FROM users WHERE nickname = 'user8')), 'Any plans for the weekend?'),
 ((SELECT id FROM users WHERE nickname = 'user8'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user5') AND user_2 = (SELECT id FROM users WHERE nickname = 'user8')), 'Not yet, still deciding.');
 
 -- Chat between user6 and user7
-INSERT INTO messages (sender, chat_id, body) VALUES
+INSERT INTO messages (sender_id, chat_id, body) VALUES
 ((SELECT id FROM users WHERE nickname = 'user6'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user6') AND user_2 = (SELECT id FROM users WHERE nickname = 'user7')), 'Hi user7!'),
 ((SELECT id FROM users WHERE nickname = 'user7'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user6') AND user_2 = (SELECT id FROM users WHERE nickname = 'user7')), 'Hello user6!'),
 ((SELECT id FROM users WHERE nickname = 'user6'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user6') AND user_2 = (SELECT id FROM users WHERE nickname = 'user7')), 'How’s it going?'),
 ((SELECT id FROM users WHERE nickname = 'user7'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user6') AND user_2 = (SELECT id FROM users WHERE nickname = 'user7')), 'Going well, thanks.');
 
 -- Chat between user7 and user8
-INSERT INTO messages (sender, chat_id, body) VALUES
+INSERT INTO messages (sender_id, chat_id, body) VALUES
 ((SELECT id FROM users WHERE nickname = 'user7'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user7') AND user_2 = (SELECT id FROM users WHERE nickname = 'user8')), 'Hello user8!'),
 ((SELECT id FROM users WHERE nickname = 'user8'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user7') AND user_2 = (SELECT id FROM users WHERE nickname = 'user8')), 'Hi user7!'),
 ((SELECT id FROM users WHERE nickname = 'user7'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user7') AND user_2 = (SELECT id FROM users WHERE nickname = 'user8')), 'What are you up to?'),
 ((SELECT id FROM users WHERE nickname = 'user8'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user7') AND user_2 = (SELECT id FROM users WHERE nickname = 'user8')), 'Just working on some stuff.');
 
 -- Chat between user8 and user9
-INSERT INTO messages (sender, chat_id, body) VALUES
+INSERT INTO messages (sender_id, chat_id, body) VALUES
 ((SELECT id FROM users WHERE nickname = 'user8'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user8') AND user_2 = (SELECT id FROM users WHERE nickname = 'user9')), 'Hi user9!'),
 ((SELECT id FROM users WHERE nickname = 'user9'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user8') AND user_2 = (SELECT id FROM users WHERE nickname = 'user9')), 'Hello user8!'),
 ((SELECT id FROM users WHERE nickname = 'user8'), (SELECT id FROM chats WHERE user_1 = (SELECT id FROM users WHERE nickname = 'user8') AND user_2 = (SELECT id FROM users WHERE nickname = 'user9')), 'Any updates on the project?'),

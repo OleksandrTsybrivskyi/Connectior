@@ -16,11 +16,20 @@ flask --app connectior run --debug
 ```
 
 # Database
-## Init database
+## Create database
 ```bash
-flask --app connectior database init
+flask --app connectior database create
 ```
 ## Fill database with test data
 ```bash
 flask --app connectior database fill
+```
+## Delete database file
+```bash
+flask --app connectior database delete
+```
+## Reset database
+Delete and create a new empty one
+```bash
+flask --app connectior database reset
 ```
