@@ -38,7 +38,20 @@ def register():
         
 
         if error is None:
-            try:
+            check_if_email_exists = db.execute(
+                    'SELECT 1 FROM users WHERE email = ?', (email,)
+                ).fetchone()
+            check_if_nickname_exists = db.execute(
+                    'SELECT 1 FROM users WHERE nickname = ?', (nickname,)
+                ).fetchone()
+            
+            if check_if_email_exists and check_if_nickname_exists:
+                error = f"User {email} is already registered.\nUser @{nickname} is already registered."
+            elif check_if_email_exists:
+                error = f"User {email} is already registered."
+            elif check_if_nickname_exists:
+                error = f"User {nickname} is already registered."
+            else:
                 activation_code = send_email_activation_letter(email)
                 sent_time = int(time.time())
                 db.execute(
@@ -46,9 +59,7 @@ def register():
                     (email, generate_password_hash(password), first_name, last_name, nickname, activation_code, sent_time,),
                 )
                 db.commit()
-            except db.IntegrityError:
-                error = f"User {email} is already registered."
-            else:
+            
                 return redirect(url_for("auth.check_inbox"))
 
 
