@@ -56,22 +56,28 @@ def register():
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'POST':
-        email = request.form['email_or_nickname']
+        email_or_nickname = request.form['email_or_nickname']
         password = request.form['password']
         db = get_db()
         error = None
+        user = None
 
-        if not verify_email(email):
+        if not verify_email(email_or_nickname):
             error = 'Incorrect email.'
         elif not verify_password(password):
             error = 'Incorrect password.'
-
-        user = db.execute(
-            'SELECT * FROM users WHERE email = ?', (email,)
-        ).fetchone()
+        else:
+            if '@' in email_or_nickname:
+                user = db.execute(
+                    'SELECT * FROM users WHERE email = ?', (email_or_nickname,)
+                ).fetchone()
+            else:
+                user = db.execute(
+                    'SELECT * FROM users WHERE nickname = ?', (email_or_nickname,)
+                ).fetchone()
 
         if user is None:
-            error = 'Incorrect email.'
+            error = 'Incorrect email or nickname.'
         elif not check_password_hash(user['password'], password):
             error = 'Incorrect password.'
 
