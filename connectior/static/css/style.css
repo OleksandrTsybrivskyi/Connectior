@@ -29,6 +29,8 @@ body, html{
 }
 
 #chat{
+    display: flex;
+    flex-direction: column-reverse;
     background-color: var(--haiti);
     box-shadow: grey 0 0 5px;
     height:calc(100% - 70px);
@@ -178,4 +180,25 @@ label{
     width:90%;
     margin: 20px 4%;
     padding: 1%;
+}
+
+.message *{
+    word-break: break-all;
+    text-align: justify;
+    padding: 20px;
+    background-image: linear-gradient(var(--casper), var(--concrete));
+    width: 400px;
+    margin: 10px;
+    color:var(--maringova_bruise) ;
+}
+.left{
+    float:left;
+    border-radius:0 20px 20px 20px;
+}
+.right{
+    float:right;
+    border-radius:20px 20px 0 20px;
+}
+.message{
+    width: 100%;
 }
