@@ -14,6 +14,7 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
+    error = None
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -22,7 +23,6 @@ def register():
         nickname = request.form['nickname']
         
         db = get_db()
-        error = None
 
         if not verify_email(email):
             error = 'Invalid email address.'
@@ -48,18 +48,17 @@ def register():
             else:
                 return redirect(url_for("auth.login"))
 
-        flash(error)
 
-    return render_template('register.html')
+    return render_template('register.html', error=error)
 
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
+    error = None
     if request.method == 'POST':
         email_or_nickname = request.form['email_or_nickname']
         password = request.form['password']
         db = get_db()
-        error = None
         user = None
 
         if not verify_email(email_or_nickname):
@@ -86,6 +85,6 @@ def login():
             session['user_id'] = user['id']
             return redirect(url_for('index'))
 
-        flash(error)
 
-    return render_template('login.html')
+    return render_template('login.html', error=error)
+error = None
