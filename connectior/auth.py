@@ -1,4 +1,5 @@
 import functools
+from connectior.lib.verification import *
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
@@ -23,14 +24,16 @@ def register():
         db = get_db()
         error = None
 
-        if not email:
-            error = 'Email is required.'
-        elif not password:
-            error = 'Password is required.'
-        elif not first_name:
-            error = 'First name is required.'
-        elif not nickname:
-            error = 'Nickname is required.'
+        if not verify_email(email):
+            error = 'Invalid email address.'
+        elif not verify_password(password):
+            error = 'Invalid password.'
+        elif not verify_first_name(first_name):
+            error = 'Invalid first name.'
+        elif not verify_last_name(last_name):
+            error = 'Invalid last name.'
+        elif not verify_nickname(nickname):
+            error = 'Invalid nickname.'
         
 
         if error is None:
@@ -57,6 +60,12 @@ def login():
         password = request.form['password']
         db = get_db()
         error = None
+
+        if not verify_email(email):
+            error = 'Incorrect email.'
+        elif not verify_password(password):
+            error = 'Incorrect password.'
+
         user = db.execute(
             'SELECT * FROM users WHERE email = ?', (email,)
         ).fetchone()
