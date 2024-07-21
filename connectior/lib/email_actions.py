@@ -6,6 +6,8 @@ import smtplib
 import hashlib
 import random
 
+import time
+
 def create_activation_code():
     """Hashes a password using the SHA-256 algorithm."""
     hash_object = hashlib.sha256()
@@ -14,19 +16,10 @@ def create_activation_code():
     return hash_object.hexdigest()
 
 
-def email_verif(email_receiver):
+def send_email(email_receiver, subject, body):
     email_sender = "kodova.bryhada@gmail.com"
-    email_password = os.environ.get("EMAIL_PASSWORD")
-    # email_password = "djfb xumm nfcv mpxl"
-    email_receiver = "tsybrivsky@gmail.com"
-
-    activation_code = create_activation_code()
-
-    subject = "Account activation"
-    body = f"""
-    To activate your Connectior account follow this link:
-    http://127.0.0.1:5000/activate?activation_code={activation_code}
-    """
+    # email_password = os.environ.get("EMAIL_PASSWORD")
+    email_password = "djfb xumm nfcv mpxl"
 
     em = EmailMessage()
     em["From"] = email_sender
@@ -40,4 +33,17 @@ def email_verif(email_receiver):
         smtp.login(email_sender, email_password)
         smtp.sendmail(email_sender, email_receiver, em.as_string())
 
+
+def send_email_activation_letter(email_receiver):
+    activation_code = create_activation_code()
+
+    subject = "Account activation"
+    body = f"""
+    To activate your Connectior account follow this link:
+    http://127.0.0.1:5000/auth/activate/activation_code={activation_code}
+    """
+    send_email(email_receiver=email_receiver, subject=subject, body=body)
+
     return activation_code
+
+

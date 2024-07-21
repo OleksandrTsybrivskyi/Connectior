@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+{% if error != None %}
+<script> alert("{{error}}"); </script>
+{% set error = None %}
+{% endif %}
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
