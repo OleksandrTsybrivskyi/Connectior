@@ -1,0 +1,112 @@
+:root{
+    --haiti:#1D1340;
+    --casper:#BACBD9;
+    --concrete:#F2F2F2;
+    --maringova_bruise:#223440;
+    --lesya_Ukraine:#5D7A8C;
+}
+
+body, html{
+    display:flex;
+    flex-wrap: wrap;
+    background-color:var(--maringova_bruise);
+    height:100%;
+    width:100%;
+    padding:0;
+    margin:0;
+}
+
+
+#chats{
+    box-shadow: grey 0 0 5px;
+    background-color:#eee;
+    height:calc(100% - 70px);
+    overflow:scroll;
+    width:30%;
+    }
+
+#chat{
+    box-shadow: grey 0 0 5px;
+    background-color:#eee;
+    height:calc(100% - 70px);
+    overflow:scroll;
+    width:50%;
+    }
+
+#setting{
+    box-shadow: grey 0 0 5px;
+    background-color:#eee;
+    height:calc(100% - 70px);
+    width:20%;
+    }
+
+#header{
+    display:inline-block;
+    box-shadow: grey 0 0 5px;
+    background-color:#eee;
+    width:100%;
+    height:70px;}
+
+#register form{
+    width:400px;
+    height:550px;}
+
+#login form{
+    width:400px;
+    height:400px;}
+
+form{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items: center;
+    background-color: var(--haiti);
+    height:100%;
+    width:100%;
+    padding:20px;
+    border-radius:10px;}
+
+#register, #login{
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    height:100%;
+    width:100%;}
+
+
+form input{
+    width:90%;
+    background-color: var(--haiti);
+    padding: 10px 0;
+    margin: 14px 0;
+    border-radius:10px;
+    border:1px solid var(--lesya_Ukraine);
+    color:var(--concrete);}
+
+input[type="submit"]{
+    width:93%;
+    color: var(--lesya_Ukraine);
+    background-color: var(--concrete);
+    padding: 10px 0 10px;
+    }
+
+form a{
+    display:block;
+    text-align:center;
+    width: 92%;
+    color:var(--casper);
+    background-color: var(--maringova_bruise);
+    text-decoration-line: none;
+    padding: 10px 0;
+    background-color:grey;
+    margin: 10px 0;
+    border-radius:10px;
+}
+
+label{
+    color:var(--concrete);
+    padding:0 7%;
+    width:100%;
+    text-align:left;
+
+}
