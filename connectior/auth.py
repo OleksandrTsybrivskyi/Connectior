@@ -47,13 +47,13 @@ def register():
 
         flash(error)
 
-    return render_template('auth/register.html')
+    return render_template('register.html')
 
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'POST':
-        email = request.form['email']
+        email = request.form['email_or_nickname']
         password = request.form['password']
         db = get_db()
         error = None
@@ -73,4 +73,4 @@ def login():
 
         flash(error)
 
-    return render_template('auth/login.html')
+    return render_template('login.html')
