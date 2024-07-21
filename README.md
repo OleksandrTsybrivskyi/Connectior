@@ -12,5 +12,5 @@ pip install Flask
 
 # Run
 ```bash
-flask --app connectior run
+flask --app connectior run --debug
 ```
