@@ -91,7 +91,7 @@ def login():
 
         flash(error)
 
-    return render_template('auth/login.html')
+    return render_template('login.html')
 
 
 @bp.route('/activate/activation_code=<string:activation_code>', methods=('GET', 'POST'))
@@ -121,4 +121,4 @@ def activate(activation_code):
 
 @bp.route('/check_inbox', methods=('GET', 'POST'))
 def check_inbox():
-    return render_template("auth/check_inbox.html")
+    return render_template("check_inbox.html")
