@@ -58,5 +58,5 @@ CREATE TABLE IF NOT EXISTS unactivated_users (
     nickname VARCHAR(16) NOT NULL,
 
     activation_code VARCHAR(64) NOT NULL,
-    sent_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    sent_time INTEGER NOT NULL
 );
