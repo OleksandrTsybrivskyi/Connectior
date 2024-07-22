@@ -73,20 +73,25 @@ def login():
         password = request.form['password']
         db = get_db()
         user = None
-
-        if not verify_email(email_or_nickname):
-            error = 'Incorrect email.'
-        elif not verify_password(password):
-            error = 'Incorrect password.'
-        else:
+            
+        
+        if verify_password(password):
             if '@' in email_or_nickname:
-                user = db.execute(
-                    'SELECT * FROM users WHERE email = ?', (email_or_nickname,)
-                ).fetchone()
+                if verify_email(email_or_nickname):
+                    user = db.execute(
+                        'SELECT * FROM users WHERE email = ?', (email_or_nickname,)
+                    ).fetchone()
+                else:
+                    error = 'Invalid email.'
             else:
-                user = db.execute(
-                    'SELECT * FROM users WHERE nickname = ?', (email_or_nickname,)
-                ).fetchone()
+                if verify_nickname(email_or_nickname):
+                    user = db.execute(
+                        'SELECT * FROM users WHERE nickname = ?', (email_or_nickname,)
+                    ).fetchone()
+                else:
+                    error = 'Invalid nickname.'
+        else:
+            error = 'Invalid password.'
 
         if user is None:
             error = 'Incorrect email or nickname.'
@@ -96,10 +101,9 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
-            return redirect(url_for('messanger'))
+            return redirect(url_for('messanger.messanger'))
 
-
-    return render_template('login.html')
+    return render_template('login.html', error=error)
 
 
 @bp.route('/activate/activation_code=<string:activation_code>', methods=('GET', 'POST'))
@@ -137,3 +141,9 @@ def activate(activation_code):
 @bp.route('/check_inbox', methods=('GET', 'POST'))
 def check_inbox():
     return render_template("check_inbox.html")
+
+
+@bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('auth.login'))
