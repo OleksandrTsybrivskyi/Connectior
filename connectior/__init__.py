@@ -26,7 +26,8 @@ def create_app(test_config=None):
 
     app.register_blueprint(db.bp)
 
-    from . import auth
+    from . import auth, messanger
     app.register_blueprint(auth.bp)
+    app.register_blueprint(messanger.bp)
 
     return app
