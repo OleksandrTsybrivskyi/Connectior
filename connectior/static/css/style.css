@@ -141,6 +141,9 @@ label{
 }
 .chat_conversation{
     display:flex;
+    justify-content:flex-start;
+    align-items: center;
+    flex-wrap: wrap;
     width:calc(100% - 60px);
     height:calc(100% - 60px);
     margin: 10px 20px;
@@ -150,17 +153,18 @@ label{
 .chat_conversation_name{
     color:var(--concrete);
     font-weight:bold;
-    font-size:20px;
+    font-size:15px;
+    float:left;
     margin-left:10px;
     width: 50%;
 
 }
 
-.chat_conversation_nickname{
+.last_message{
     color:var(--casper);
     font-size:15px;
-    margin-left:10px;
-
+    margin: 0 10px;
+    float:left;
 }
 
 
@@ -186,10 +190,11 @@ label{
     word-break: break-all;
     text-align: justify;
     padding: 20px;
-    background-image: linear-gradient(var(--casper), var(--concrete));
+    background-color:var(--maringova_bruise);
+    border: 1px solid var(--lesya_Ukraine);
     width: 400px;
     margin: 10px;
-    color:var(--maringova_bruise) ;
+    color:var(--concrete) ;
 }
 .left{
     float:left;
@@ -208,4 +213,12 @@ label{
     margin: 10px;
     cursor: pointer;
     float:right;
+}
+
+.chat_conversation_text{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    text-align:left;
 }
