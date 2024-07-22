@@ -37,7 +37,6 @@ def register():
         elif not verify_nickname(nickname):
             error = 'Invalid nickname.'
         
-
         if error is None:
             check_if_email_exists = db.execute(
                     'SELECT 1 FROM users WHERE email = ?', (email,)
@@ -60,6 +59,7 @@ def register():
                     (email, generate_password_hash(password), first_name, last_name, nickname, activation_code, sent_time,),
                 )
                 db.commit()
+                return redirect(url_for('auth.check_inbox'))
 
 
     return render_template('register.html', error=error)
@@ -112,20 +112,25 @@ def activate(activation_code):
 
     if user != None:
         current_time = time.time()
-        if current_time - user.sent_time <= 600:
-            db.execute(
-                "INSERT INTO users (email, password, first_name, last_name, nickname) VALUES (?, ?, ?, ?, ?)",
-                (user.email, user.password, user.first_name, user.last_name, user.nickname,),
-            )
-            db.commit()
-            flash("Your account has been activated. Please, login to your account.")
-            return redirect(url_for("login"))
+        if current_time - user["sent_time"] <= 600:
+            try:
+                db.execute(
+                    "INSERT INTO users (email, password, first_name, last_name, nickname) VALUES (?, ?, ?, ?, ?)",
+                    (user["email"], user["password"], user["first_name"], user["last_name"], user["nickname"],),
+                )
+                db.commit()
+            except:
+                flash("Activation code is already used")
+                return redirect(url_for("auth.register"))
+            else:
+                flash("Your account has been activated. Please, login to your account.")
+                return redirect(url_for("auth.login"))
         else:
             flash("Activation code has been expired. Complete registration again.")
-            return redirect(url_for("register"))
+            return redirect(url_for("auth.register"))
     
     flash("Wrong activation code")
-    return redirect(url_for("register"))
+    return redirect(url_for("auth.register"))
         
 
 
