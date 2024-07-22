@@ -16,6 +16,10 @@
     <meta charset="UTF-8">
     <title>home</title>
     <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
 
 </head>
     <body>
@@ -25,11 +29,11 @@
         let img = document.getElementById("btn_ch_theme");
         let root = document.documentElement;
         if (img.src.includes("sun.png")) {
-            root.style.setProperty('--haiti', '#5D7A8C');
-            root.style.setProperty('--casper', '#223440');
-            root.style.setProperty('--concrete', '#1D1340');
-            root.style.setProperty('--maringova_bruise', '#BACBD9');
-            root.style.setProperty('--lesya_Ukraine', '#F2F2F2');
+            root.style.setProperty('--haiti', '#e1e5f2');
+            root.style.setProperty('--casper', '#1f7a8c');
+            root.style.setProperty('--concrete', '#022b3a');
+            root.style.setProperty('--maringova_bruise', '#bfdbf7');
+            root.style.setProperty('--lesya_Ukraine', '#ffffff');
 
             img.src = "../static/imgs/moon.png";
         } else {
@@ -44,66 +48,41 @@
 
         </script>
         <div id="header">
+            <img id="logo" src="../static/imgs/connectior-logo.png">
             <img id="btn_ch_theme" src="../static/imgs/sun.png" onclick="ch_theme()">
         </div>
         <div id="chats">
-            <input type="text" name="search" id="search" value="Search">
+            <input type="text" name="search" id="search" placeholder="Search">
             <div id="chats_conteiner">
                 <div class="chat_conversation">
                     <img src="../static/imgs/user_icon.png" class="chat_conversation_img" alt="">
-                    <h3 class="chat_conversation_name">Daryna</h3>
-                <h6 class="chat_conversation_nickname">
-                    Darya2111
-                </h6>
-            </div>
+                    <div class="chat_conversation_text"><p class="chat_conversation_name">Daryna</p>
+                <p class="last_message">hello</p></div>
 
-                <div class="chat_conversation">
-                    <img src="../static/imgs/user_icon.png" class="chat_conversation_img" alt="">
-                    <h3 class="chat_conversation_name">Daryna</h3>
-                <h6 class="chat_conversation_nickname">
-                    Darya2111
-                </h6>
             </div>
-
-                <div class="chat_conversation">
-                    <img src="../static/imgs/user_icon.png" class="chat_conversation_img" alt="">
-                    <h3 class="chat_conversation_name">Daryna</h3>
-                <h6 class="chat_conversation_nickname">
-                    Darya2111
-                </h6>
-            </div>
-
-                <div class="chat_conversation">
-                    <img src="../static/imgs/user_icon.png" class="chat_conversation_img" alt="">
-                    <h3 class="chat_conversation_name">Daryna</h3>
-                <h6 class="chat_conversation_nickname">
-                    Darya2111
-                </h6>
-            </div>
-
-                <div class="chat_conversation">
-                    <img src="../static/imgs/user_icon.png" class="chat_conversation_img" alt="">
-                    <h3 class="chat_conversation_name">Daryna</h3>
-                <h6 class="chat_conversation_nickname">
-                    Darya2111
-                </h6>
-            </div>
-
 
             </div>
         </div>
          
         <div id="chat">
+            <div id="sent_message">
+                <form action="post">
+                    <input name="sent_message" id="sent_message_input" placeholder="your message"><input value="" type="submit" id="sent_message_icon">
+                </form>
+            </div>
             <div class="message">
-            <div class="left">rdgylesiuftoyghugyfutyreuw35er567[8u.,,igsggrptf</div></div>
+            <div class="left">Жо́вква — місто в Україні з населенням 13 тисяч мешканців у північній частині Львівського району, центр громади. Поселення засноване у 1368 році. Міські права отримало 1603 року. Відоме як місто ремісників. У XVII столітті Жовква була резиденцією короля Речі Посполитої Яна III Собеського. Наприкінці XVII — на початку XVIII століть славилася художня школа і школа різьблення по дереву.<h6 class="data">27-11-23</h6></div></div>
             <div class="message">
-            <div class="right">rdgylesiuftoyghugyfutyreuw35er567[8u.,,igsggrptf</div></div>
-        </div>
-
+                <div class="right">f <h6 class="data">27-11-23</h6></div>
+            </div></div>
         <div id="setting">
-
-        </div>
-        <div id="footer">
+            <img id="setting_icon" src="../static/imgs/user_icon.png">
+            <p class="setting_txt">Name: kjxk,h</p>
+            <p class="setting_txt">First name: rkufci</p>
+            <p class="setting_txt">Last name: ehrmj</p>
+            <p class="setting_txt">Nickname: hhaj</p>
+            <p class="setting_txt">Email: ztkjhgd</p>
+            <p class="setting_txt"><a href="">Log out</a></p>
         </div>
     </body>
 </html>
