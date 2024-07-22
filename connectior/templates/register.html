@@ -12,11 +12,14 @@
 <body>
 <script>
 function cheng_password_type() {
-  var x = document.getElementById("password");
+  let x = document.getElementById("password");
+  let y = document.getElementById("eye");
   if (x.type === "password") {
     x.type = "text";
+    y.src = "../static/imgs/hide-password-icon.png";
   } else {
     x.type = "password";
+    y.src = "../static/imgs/show-password-icon.png";
   }
 }
 </script>
