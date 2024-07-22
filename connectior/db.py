@@ -4,6 +4,8 @@ import click
 from flask import current_app, g, Blueprint
 from datetime import datetime
 
+from werkzeug.security import generate_password_hash
+
 import os
 
 bp = Blueprint('database', __name__)
@@ -50,6 +52,17 @@ def fill_db_command():
 
     with current_app.open_resource('schema-fill.sql') as f:
         db.executescript(f.read().decode('utf8'))
+
+    users = db.execute('SELECT id, password FROM users').fetchall()
+
+    for user in users:
+        # Hash the password
+        hashed_password = generate_password_hash(user['password'])
+
+        # Update the user record with the hashed password
+        db.execute('UPDATE users SET password = ? WHERE id = ?', (hashed_password, user['id']))
+    
+    db.commit()
 
     click.echo('Successfully fill the database with test data.')
 

@@ -37,16 +37,29 @@ def register():
         elif not verify_nickname(nickname):
             error = 'Invalid nickname.'
         
-
         if error is None:
-            activation_code = send_email_activation_letter(email)
-            db.execute(
-                "INSERT INTO unactivated_users (email, password, first_name, last_name, nickname, activation_code) VALUES (?, ?, ?, ?, ?, ?)",
-                (email, generate_password_hash(password), first_name, last_name, nickname, activation_code,),
-            )
-            db.commit()
-            
-            return redirect(url_for("auth.check_inbox"))
+            check_if_email_exists = db.execute(
+                    'SELECT 1 FROM users WHERE email = ?', (email,)
+                ).fetchone()
+            check_if_nickname_exists = db.execute(
+                    'SELECT 1 FROM users WHERE nickname = ?', (nickname,)
+                ).fetchone()
+
+            if check_if_email_exists and check_if_nickname_exists:
+                error = f"User {email} is already registered.\nUser @{nickname} is already registered."
+            elif check_if_email_exists:
+                error = f"User {email} is already registered."
+            elif check_if_nickname_exists:
+                error = f"User {nickname} is already registered."
+            else:
+                activation_code = send_email_activation_letter(email)
+                sent_time = int(time.time())
+                db.execute(
+                    "INSERT INTO unactivated_users (email, password, first_name, last_name, nickname, activation_code, sent_time) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    (email, generate_password_hash(password), first_name, last_name, nickname, activation_code, sent_time,),
+                )
+                db.commit()
+                return redirect(url_for('auth.check_inbox'))
 
 
     return render_template('register.html', error=error)
@@ -98,23 +111,26 @@ def activate(activation_code):
     ).fetchone()
 
     if user != None:
-        current_time = datetime.now(timezone.utc)
-        ### TODO make transfer from sql datatime to python datatime
-        raise NotImplementedError("TODO make transfer from sql datatime to python datatime")
-        if (current_time - user["sent_time"]).total_seconds() <= 600:
-            db.execute(
-                "INSERT INTO users (email, password, first_name, last_name, nickname) VALUES (?, ?, ?, ?, ?)",
-                (user.email, user.password, user.first_name, user.last_name, user.nickname,),
-            )
-            db.commit()
-            flash("Your account has been activated. Please, login to your account.")
-            return redirect(url_for("login"))
+        current_time = time.time()
+        if current_time - user["sent_time"] <= 600:
+            try:
+                db.execute(
+                    "INSERT INTO users (email, password, first_name, last_name, nickname) VALUES (?, ?, ?, ?, ?)",
+                    (user["email"], user["password"], user["first_name"], user["last_name"], user["nickname"],),
+                )
+                db.commit()
+            except:
+                flash("Activation code is already used")
+                return redirect(url_for("auth.register"))
+            else:
+                flash("Your account has been activated. Please, login to your account.")
+                return redirect(url_for("auth.login"))
         else:
             flash("Activation code has been expired. Complete registration again.")
-            return redirect(url_for("register"))
+            return redirect(url_for("auth.register"))
     
     flash("Wrong activation code")
-    return redirect(url_for("register"))
+    return redirect(url_for("auth.register"))
         
 
 
