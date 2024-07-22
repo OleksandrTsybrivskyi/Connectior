@@ -202,3 +202,10 @@ label{
 .message{
     width: 100%;
 }
+
+#btn_ch_theme{
+    width:50px;
+    margin: 10px;
+    cursor: pointer;
+    float:right;
+}
