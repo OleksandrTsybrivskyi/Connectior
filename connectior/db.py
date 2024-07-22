@@ -2,6 +2,7 @@ import sqlite3
 
 import click
 from flask import current_app, g, Blueprint
+from datetime import datetime
 
 import os
 
@@ -72,3 +73,6 @@ def clear_db_command():
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(create_db_command)
+
+def sql_time_to_python_time(sql_time: str):
+    raise NotImplementedError()
