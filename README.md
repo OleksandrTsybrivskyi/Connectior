@@ -7,29 +7,29 @@ python -m venv .venv
 ```
 Install pip dependencies
 ```bash
-pip install Flask
+pip install Flask flask-socketio
 ```
 
 # Run
 ```bash
-flask --app connectior run --debug
+python run.py
 ```
 
 # Database
 ## Create database
 ```bash
-flask --app connectior database create
+python database.py create
 ```
 ## Fill database with test data
 ```bash
-flask --app connectior database fill
+python database.py fill
 ```
 ## Delete database file
 ```bash
-flask --app connectior database delete
+python database.py delete
 ```
 ## Reset database
 Delete and create a new empty one
 ```bash
-flask --app connectior database reset
+python database.py reset
 ```
