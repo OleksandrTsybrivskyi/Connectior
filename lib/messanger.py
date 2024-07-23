@@ -68,8 +68,6 @@ def messanger():
 
     logout_url = url_for('auth.logout', _external=True)
 
-    print(current_user_info)
-
     return render_template("messanger.html",
                            chats=chats,
                            current_user_info=current_user_info,
