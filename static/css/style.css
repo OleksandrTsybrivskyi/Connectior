@@ -300,3 +300,27 @@ label{
     float:right;
     margin: 3px;
 }
+
+#check_inbox_container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    height:100%;
+}
+
+#check_inbox{
+    color:var(--casper);}
+
+.message_icon{
+    display:inline-block;
+    height:15px;
+    float:right;
+    padding:0;
+    margin: 3px;}
+
+#is_nothing_found{
+    width:calc(100% - 60px);
+    font-size:20pt;
+    color:var(--concrete);
+    padding:30px;}

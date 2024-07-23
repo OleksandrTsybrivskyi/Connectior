@@ -34,13 +34,13 @@ def send_email(email_receiver, subject, body):
         smtp.sendmail(email_sender, email_receiver, em.as_string())
 
 
-def send_email_activation_letter(email_receiver):
+def send_email_activation_letter(email_receiver, activation_link_prefix):
     activation_code = create_activation_code()
 
     subject = "Account activation"
     body = f"""
     To activate your Connectior account follow this link:
-    http://127.0.0.1:5000/auth/activate?activation_code={activation_code}
+    {activation_link_prefix}?activation_code={activation_code}
     """
     send_email(email_receiver=email_receiver, subject=subject, body=body)
 
