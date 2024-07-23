@@ -3,6 +3,10 @@ import os
 from flask import Flask
 from flask_socketio import SocketIO
 
+from flask import (
+    Blueprint, flash, g, redirect, render_template, request, session, url_for
+)
+
 from lib import db
 
 app = Flask(__name__, instance_relative_config=True)
@@ -20,3 +24,7 @@ db.init_app(app)
 from lib import auth, messanger
 app.register_blueprint(auth.bp)
 app.register_blueprint(messanger.bp)
+
+@app.route('/')
+def index():
+    return redirect(url_for('auth.register'))
