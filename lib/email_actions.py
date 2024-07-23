@@ -40,7 +40,7 @@ def send_email_activation_letter(email_receiver):
     subject = "Account activation"
     body = f"""
     To activate your Connectior account follow this link:
-    http://127.0.0.1:5000/auth/activate/activation_code={activation_code}
+    http://127.0.0.1:5000/auth/activate?activation_code={activation_code}
     """
     send_email(email_receiver=email_receiver, subject=subject, body=body)
 
