@@ -76,12 +76,20 @@ def messanger():
 
 @socketio.on('open_chat')
 def handle_custom_event(data):
+    '''
+    Recieve "chat_id" from client
+    '''
     print('Received data:', data)
 
     db = get_db()
     
     message_rows = db.execute(
-        "SELECT * FROM messages WHERE chat_id = ?;",
+        """
+        SELECT * FROM messages
+        WHERE chat_id = ?
+        ORDER BY send_time DESC
+        LIMIT 50;
+        """,
         (data['chat_id'],)
     ).fetchone()
     
@@ -100,6 +108,9 @@ def handle_custom_event(data):
     response_data = {
         'response': messages
     }
+
+    print(response_data)
     
-    # Send a response back to the client
     emit('chat_open_responce', response_data)
+
+
