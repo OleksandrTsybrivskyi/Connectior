@@ -3,9 +3,7 @@
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
-        <script type="text/javascript"  charset="utf-8">
-            function open_chat(id){
-                alert(id)}
+    <script type="text/javascript"  charset="utf-8">
         $(document).ready(function() {
 
             const socket = io();
@@ -55,21 +53,16 @@
         </div>
         <div id="chats">
             <input type="text" name="search" id="search" placeholder="Search">
-            {% if chats %}
-            {% for chat in chats %}
             <div id="chats_conteiner">
-                <div class="chat_conversation" onclick="open_chat({{chat['id']}})">
+                <div class="chat_conversation">
                     <img src="../static/imgs/user_icon.png" class="chat_conversation_img" alt="">
-                    <div class="chat_conversation_text"><p class="chat_conversation_name">{{chat["chat_name"]}}</p>
-                <p class="last_message">{{chat["last_message"]}}</p></div>
+                    <div class="chat_conversation_text"><p class="chat_conversation_name">Daryna</p>
+                <p class="last_message">hello</p></div>
 
             </div>
 
             </div>
-            {% endfor %}
-            {% else %}
             <p id="is_nothing_found">Nothing found</p>
-            {% endif %}
         </div>
 
         <div id="chat">
@@ -79,10 +72,10 @@
                 </form>
             </div>
             <div class="message">
-            <div class="left">Жо́вква — місто в Україні з населенням 13 тисяч мешканців у північній частині Львівського району, центр громади. Поселення засноване у 1368 році. Міські права отримало 1603 року. Відоме як місто ремісників. У XVII столітті Жовква була резиденцією короля Речі Посполитої Яна III Собеського. Наприкінці XVII — на початку XVIII століть славилася художня школа і школа різьблення по дереву.<h6 class="data"><br>27-11-23<img class="message_icon" src="../static/imgs/message_read_icon.png" >
+            <div class="left">Жо́вква — місто в Україні з населенням 13 тисяч мешканців у північній частині Львівського району, центр громади. Поселення засноване у 1368 році. Міські права отримало 1603 року. Відоме як місто ремісників. У XVII столітті Жовква була резиденцією короля Речі Посполитої Яна III Собеського. Наприкінці XVII — на початку XVIII століть славилася художня школа і школа різьблення по дереву.<h6 class="data">27-11-23<img class="message_icon" src="../static/imgs/message_read_icon.png" >
                 </h6></div></div>
             <div class="message">
-                <div class="right">f <h6 class="data"> <br>27-11-23 <img class="message_icon" src="../static/imgs/message_read_icon.png" ></h6></div>
+                <div class="right">f <h6 class="data">27-11-23 <img class="message_icon" src="../static/imgs/message_read_icon.png" ></h6></div>
             </div></div>
         <div id="setting">
             <img id="setting_icon" src="../static/imgs/user_icon.png">
