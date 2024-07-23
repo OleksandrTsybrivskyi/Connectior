@@ -2,6 +2,7 @@ from flask import Blueprint
 from threading import Lock
 from flask import Flask, render_template, session, url_for, redirect
 from flask_socketio import SocketIO, emit
+from app import socketio
 
 from lib.db import get_db
 
@@ -72,3 +73,33 @@ def messanger():
                            chats=chats,
                            current_user_info=current_user_info,
                            logout_url=logout_url)
+
+@socketio.on('open_chat')
+def handle_custom_event(data):
+    print('Received data:', data)
+
+    db = get_db()
+    
+    message_rows = db.execute(
+        "SELECT * FROM messages WHERE chat_id = ?;",
+        (data['chat_id'],)
+    ).fetchone()
+    
+    messages = []
+    for message_row in message_rows:
+
+        message_my = message_row['sender_id'] == session['user_id']
+
+        messages.append({
+            'message_my': message_my,
+            'viewed': message_row['viewed'],
+            'body': message_row['body'],
+            'send_time': message_row['send_time']
+        })
+
+    response_data = {
+        'response': messages
+    }
+    
+    # Send a response back to the client
+    emit('chat_open_responce', response_data)
