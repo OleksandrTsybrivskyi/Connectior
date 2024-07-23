@@ -345,3 +345,7 @@ label{
 #activation_text{
     width:100%;
     text-align:center;}
+
+.is_in_internet{
+    color:var(--lesya_Ukraine);
+    font-size:20pt;}

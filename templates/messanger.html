@@ -29,6 +29,11 @@
             io().emit('open_chat',{'chat_id':id});
             return false
         }
+        io().on('chat_open_responce', function(messages)
+        {
+
+        })
+
         function ch_theme() {
         let img = document.getElementById("btn_ch_theme");
         let x = document.cookie;
@@ -68,7 +73,7 @@
                 <div class="chat_conversation" onclick="open_chat({{chat['id']}})">
                     <img src="../static/imgs/user_icon.png" class="chat_conversation_img" alt="">
                     <div class="chat_conversation_text"><p class="chat_conversation_name">{{chat.chat_name}}</p>
-                        <p class="last_message">{{chat.last_message}}</p></div></div>
+                        <p class="last_message">{{chat.last_message}}</p></div><h1 class="is_in_internet">.</h1></div>
                     {%endfor%}
             </div>
             {% else %}

@@ -110,7 +110,6 @@ def handle_custom_event(data):
         })
         
 
-    
     emit('chat_open_responce', messages)
 
 
