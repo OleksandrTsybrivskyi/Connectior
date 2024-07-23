@@ -106,9 +106,10 @@ def login():
     return render_template('login.html', error=error)
 
 
-@bp.route('/activate/activation_code=<string:activation_code>', methods=('GET', 'POST'))
-def activate(activation_code):
-
+@bp.route('/activate', methods=('GET', 'POST'))
+def activate():
+    error = None
+    activation_code = request.args.get('activation_code')
     db = get_db()
     user = db.execute(
         'SELECT * FROM unactivated_users WHERE activation_code = ? ORDER BY sent_time DESC', (activation_code,)
@@ -124,16 +125,16 @@ def activate(activation_code):
                 )
                 db.commit()
             except:
-                flash("Activation code is already used")
+                error = "Activation code is already used"
                 return redirect(url_for("auth.register"))
             else:
-                flash("Your account has been activated. Please, login to your account.")
+                error = "Your account has been activated. Please, login to your account."
                 return redirect(url_for("auth.login"))
         else:
-            flash("Activation code has been expired. Complete registration again.")
+            error = "Activation code has been expired. Complete registration again."
             return redirect(url_for("auth.register"))
     
-    flash("Wrong activation code")
+    error = "Wrong activation code"
     return redirect(url_for("auth.register"))
         
 
