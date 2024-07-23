@@ -108,13 +108,9 @@ def handle_custom_event(data):
             'body': message_row['body'],
             'send_time': send_time
         })
+        
 
-    response_data = {
-        'response': messages
-    }
-
-    print(response_data)
     
-    emit('chat_open_responce', response_data)
+    emit('chat_open_responce', messages)
 
 
