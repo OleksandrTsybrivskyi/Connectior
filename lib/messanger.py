@@ -3,6 +3,7 @@ from threading import Lock
 from flask import Flask, render_template, session, url_for, redirect, request
 from flask_socketio import SocketIO, emit
 from app import socketio
+from datetime import datetime
 
 from lib.db import get_db
 
@@ -91,27 +92,26 @@ def handle_custom_event(data):
         LIMIT 50;
         """,
         (data['chat_id'],)
-    ).fetchone()
+    ).fetchall()
     
     messages = []
     for message_row in message_rows:
 
         message_my = message_row['sender_id'] == session['user_id']
 
+        send_time = datetime.strftime(message_row['send_time'], "%d %b  %H:%M")
+
+
         messages.append({
             'message_my': message_my,
             'viewed': message_row['viewed'],
             'body': message_row['body'],
-            'send_time': message_row['send_time']
+            'send_time': send_time
         })
+        
 
-    response_data = {
-        'response': messages
-    }
-
-    print(response_data)
     
-    emit('chat_open_responce', response_data)
+    emit('chat_open_responce', messages)
 
 
 @bp.route('/post', methods=('GET', 'POST'))
