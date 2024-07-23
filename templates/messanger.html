@@ -57,16 +57,20 @@
         </div>
         <div id="chats">
             <input type="text" name="search" id="search" placeholder="Search">
+            {% if chats%}
             <div id="chats_conteiner">
-                <div class="chat_conversation">
+                {% for chat in chats%}
+                <div class="chat_conversation" onclick="open_chat({{chat.id}})">
                     <img src="../static/imgs/user_icon.png" class="chat_conversation_img" alt="">
-                    <div class="chat_conversation_text"><p class="chat_conversation_name">Daryna</p>
-                <p class="last_message">hello</p></div>
+                    <div class="chat_conversation_text"><p class="chat_conversation_name">{{chat.chat_name}}</p>
+                <p class="last_message">{{chat.last_message}}</p></div>
 
             </div>
 
             </div>
+            {% else %}
             <p id="is_nothing_found">Nothing found</p>
+            {% endif %}
         </div>
 
         <div id="chat">
