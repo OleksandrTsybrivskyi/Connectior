@@ -3,16 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Check inbox</title>
-</head>
-<body>
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Check inbox</title>
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-    <h1>{{ activation_outcome }}</h1><br>
+<div id="check_inbox_container">
+    <h1 id="check_inbox">{{ activation_outcome }}</h1>
+    <a class="activation_button" href="/auth/login">Login</a><a class="activation_button" href="/auth/register">Register</a></div>
 </body>
 </html>

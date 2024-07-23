@@ -15,7 +15,6 @@ body, html{
     padding:0;
     margin:0;
     font-family: "Open Sans", sans-serif;
-    font-size:10pt;
     font-style: normal;
 }
 
@@ -106,7 +105,7 @@ form{
     padding: 10px 0 10px;
     }
 
-.auth .form a{
+.link_form{
     display:block;
     text-align:center;
     width: 92%;
@@ -169,7 +168,7 @@ label{
 
 .last_message{
     color:var(--casper);
-    font-size:15px;
+    font-size:10px;
     margin: 0 10px;
     float:left;
 }
@@ -303,6 +302,8 @@ label{
 
 #check_inbox_container{
     display:flex;
+    flex-wrap:wrap;
+    text-align:center;
     justify-content:center;
     align-items:center;
     width:100%;
@@ -310,7 +311,8 @@ label{
 }
 
 #check_inbox{
-    color:var(--casper);}
+    color:var(--casper);
+    width:100%;}
 
 .message_icon{
     display:inline-block;
@@ -324,3 +326,11 @@ label{
     font-size:20pt;
     color:var(--concrete);
     padding:30px;}
+
+.activation_button{
+    padding:40px;
+    color:var(--concrete);
+    background-color:var(--haiti);
+    border-radius:10px;
+    margin:50px;
+    text-decoration:none;}
