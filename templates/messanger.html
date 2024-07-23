@@ -6,10 +6,10 @@
     <script type="text/javascript"  charset="utf-8">
         $(document).ready(function() {
 
-            const socket = io();
+            var socket = io();
             
             socket.on('connect', function() {
-
+                socket.emit('my event', {data: 'I\'m connected!'})
             });
         })
     </script>
@@ -24,7 +24,12 @@
 </head>
     <body>
         <script>
-            function ch_theme() {
+        function open_chat(id) {
+            alert(id);
+            io().emit('open_chat',{'chat_id':id});
+            return false
+        }
+        function ch_theme() {
         let img = document.getElementById("btn_ch_theme");
         let x = document.cookie;
         let y = x.charAt(6)
@@ -60,7 +65,7 @@
             {% if chats%}
             <div id="chats_conteiner">
                 {% for chat in chats%}
-                <div class="chat_conversation" onclick="open_chat({{chat.id}})">
+                <div class="chat_conversation" onclick="open_chat({{chat['id']}})">
                     <img src="../static/imgs/user_icon.png" class="chat_conversation_img" alt="">
                     <div class="chat_conversation_text"><p class="chat_conversation_name">{{chat.chat_name}}</p>
                         <p class="last_message">{{chat.last_message}}</p></div></div>
