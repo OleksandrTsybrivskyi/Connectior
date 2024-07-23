@@ -324,3 +324,24 @@ label{
     font-size:20pt;
     color:var(--concrete);
     padding:30px;}
+
+#activation_container{
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-wrap:wrap;
+    color:var(--casper);
+    justify-content:center;
+    align-items:center;}
+
+.btn_link{
+    text-decoration:none;
+    color:var(--casper);
+    padding:20px;
+    margin:20px;
+    border-radius:20px;
+    background-color:var(--haiti);}
+
+#activation_text{
+    width:100%;
+    text-align:center;}
