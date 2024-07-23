@@ -1,5 +1,5 @@
-from connectior.lib.verification import *
-from connectior.lib.email_actions import *
+from lib.verification import *
+from lib.email_actions import *
 
 from datetime import datetime, timezone
 
@@ -9,7 +9,7 @@ from flask import (
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from connectior.db import get_db, sql_time_to_python_time
+from lib.db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
