@@ -109,8 +109,13 @@ def handle_custom_event(data):
             'send_time': send_time
         })
         
+    responce = {
+        'messages': messages
+    }
 
-    emit('chat_open_responce', messages)
+    print(responce)
+
+    emit('chat_open_responce', responce)
 
 
 @bp.route('/post', methods=('GET', 'POST'))
