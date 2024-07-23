@@ -52,7 +52,8 @@ def register():
             elif check_if_nickname_exists:
                 error = f"User {nickname} is already registered."
             else:
-                activation_code = send_email_activation_letter(email)
+                activation_link_prefix = url_for("auth.activate", _external=True)
+                activation_code = send_email_activation_letter(email, activation_link_prefix)
                 sent_time = int(time.time())
                 db.execute(
                     "INSERT INTO unactivated_users (email, password, first_name, last_name, nickname, activation_code, sent_time) VALUES (?, ?, ?, ?, ?, ?, ?)",
