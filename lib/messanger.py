@@ -1,6 +1,6 @@
 from flask import Blueprint
 from threading import Lock
-from flask import Flask, render_template, session, url_for, redirect
+from flask import Flask, render_template, session, url_for, redirect, request
 from flask_socketio import SocketIO, emit
 from app import socketio
 
@@ -112,5 +112,25 @@ def handle_custom_event(data):
     print(response_data)
     
     emit('chat_open_responce', response_data)
+
+
+@bp.route('/post', methods=('GET', 'POST'))
+def post():
+    db = get_db()
+
+    sent_message = request.args.get('sent_message')
+    oppenned_chat_id = None
+
+    db.execute("INSERT INTO messages(sender_id, chat_id, body) VALUES (?, ?, ?)", 
+               (session["user_id"], oppenned_chat_id, sent_message,),)
+    db.commit()
+    last_message_id = db.execute("SELECT LAST_INSERT_ID()")
+    db.execute("UPDATE chats SET last_message_id = ? WHERE id = ?", 
+               (last_message_id, oppenned_chat_id))
+    db.commit()
+
+    redirect(url_for('messanger.messanger'))
+
+
 
 
