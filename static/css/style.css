@@ -281,7 +281,7 @@ label{
     background-color: var(--maringova_bruise);}
 
 #sent_message{
-    display:flex;
+    display:none;
     position:fixed;
     align-items:center;
     bottom:10px;
