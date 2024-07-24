@@ -10,7 +10,8 @@
         function send_message(){
             var message_ob = document.getElementById("sent_message_input")
             var message = message_ob.value
-            message_ob.innerHTML = ""
+            message_ob.value = ""
+
             data = {
                 "id": chatter,
                 "message": message
@@ -138,9 +139,7 @@
 
         <div id="chat">
             <div id="sent_message">
-                <form method="post">
-                    <input name="sent_message" id="sent_message_input" placeholder="your message"><input value="" type="button" onclick="send_message()" id="sent_message_icon">
-                </form>
+                <input name="sent_message" id="sent_message_input" placeholder="your message"><input value="" type="button" onclick="send_message()" id="sent_message_icon">
             </div>
             </div>
         <div id="setting">
