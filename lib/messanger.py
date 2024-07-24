@@ -95,6 +95,7 @@ def connect():
 
     for chat_row in chat_rows:
         chat_ids.append(chat_row['id'])
+        
 
     response = {
         "ids": chat_ids
@@ -167,5 +168,5 @@ def send_message(data):
             (last_message_id, opened_chat_id))
     db.commit()
  
-    data = {"chat_id" : data["id"]}
-    open_chat(data=data)
+    # data = {"chat_id" : data["id"]}
+    # open_chat(data=data)
