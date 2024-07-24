@@ -80,6 +80,7 @@
         {
             chatter = id;
             socket.emit('open_chat', {'chat_id': id})
+            document.getElementById("sent_message").style.display = 'block';
         }
 
         function ch_theme() {
@@ -156,11 +157,21 @@
             ch_theme();}
 
 
-        var inputElement = document.getElementById('search');
-        if (inputElement) {
-            inputElement.addEventListener('keydown', function(event) {
+        var inputElement1 = document.getElementById('search');
+        var inputElement2 = document.getElementById('#sent_message_input');
+        if (inputElement1) {
+            inputElement1.addEventListener('keydown', function(event) {
         if (event.keyCode === 13) {
             console.log(inputElement.value)
+        }
+        });
+        } else {
+            console.error('Елемент з id "search" не знайдений.');
+        }
+        if (inputElement2) {
+            inputElement2.addEventListener('keydown', function(event) {
+        if (event.keyCode === 13) {
+            send_message()
         }
         });
         } else {
