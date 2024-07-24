@@ -4,13 +4,52 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
     <script type="text/javascript"  charset="utf-8">
+        var socket = io();
         $(document).ready(function() {
 
-            var socket = io();
             
             socket.on('connect', function() {
                 socket.emit('my event', {data: 'I\'m connected!'})
             });
+        })
+        socket.on('chat_open_responce', function(date)
+        {
+            for(let i =0 ; i < date.length ; i++){
+                var messageDiv = document.createElement('div');
+                messageDiv.className = 'message';
+                var leftDiv = document.createElement('div');
+                var textDiv = document.createElement('div');
+                textDiv.className = 'text';
+                textDiv.innerHTML = date[i].body
+                var h6Element = document.createElement('h6');
+                h6Element.className = 'data';
+                var brElement = document.createElement('br');
+                h6Element.appendChild(brElement);
+                var data1Div = document.createElement('div');
+                data1Div.className = 'data1';
+                data1Div.innerHTML = date[i].send_time
+                h6Element.appendChild(data1Div);
+                if(date[i].message_my){
+                    leftDiv.className = 'right';
+                    var imgElement = document.createElement('img');
+                imgElement.className = 'message_icon';
+                if(date[i].viewed){
+                    imgElement.src = '../static/imgs/message_read_icon.png';
+                } else {
+                    imgElement.src = '../static/imgs/message_read_icon.png';
+                }
+                } else{
+                    leftDiv.className = 'left';}
+
+                h6Element.appendChild(imgElement);
+                h6Element.appendChild(brElement);
+                leftDiv.appendChild(textDiv);
+                leftDiv.appendChild(h6Element);
+                messageDiv.appendChild(leftDiv);
+                var chatContainer = document.getElementById('chat');
+                chatContainer.appendChild(messageDiv);
+            }
+            
         })
     </script>
     <meta charset="UTF-8">
@@ -25,12 +64,10 @@
     <body>
 
         <script>
-
-        io().on('chat_open_responce', function(messages)
+        function open_chat(id)
         {
-
-        })
-
+            socket.emit('open_chat', {'chat_id': id})
+        }
         function ch_theme() {
         let img = document.getElementById("btn_ch_theme");
         let x = document.cookie;
@@ -104,43 +141,6 @@
             document.cookie = "theme=1";
             ch_theme();}
 
-
-        function fill_messages(date) {
-            for(let i =0 ; i < date.length ; i++){
-                var messageDiv = document.createElement('div');
-                messageDiv.className = 'message';
-                var leftDiv = document.createElement('div');
-                var textDiv = document.createElement('div');
-                textDiv.className = 'text';
-                textDiv.innerHTML = date[i].body
-                var h6Element = document.createElement('h6');
-                h6Element.className = 'data';
-                var brElement = document.createElement('br');
-                h6Element.appendChild(brElement);
-                var data1Div = document.createElement('div');
-                data1Div.className = 'data1';
-                data1Div.innerHTML = date[i].send_time
-                h6Element.appendChild(data1Div);
-                if(date[i].message_my){
-                    leftDiv.className = 'right';
-                    var imgElement = document.createElement('img');
-                imgElement.className = 'message_icon';
-                if(date[i].viewed){
-                    imgElement.src = '../static/imgs/message_read_icon.png';
-                } else {
-                    imgElement.src = '../static/imgs/message_read_icon.png';
-                }
-                } else{
-                    leftDiv.className = 'left';}
-
-                h6Element.appendChild(imgElement);
-                h6Element.appendChild(brElement);
-                leftDiv.appendChild(textDiv);
-                leftDiv.appendChild(h6Element);
-                messageDiv.appendChild(leftDiv);
-                var chatContainer = document.getElementById('chat');
-                chatContainer.appendChild(messageDiv);
-            }}
 
 
     </script>
