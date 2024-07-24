@@ -82,10 +82,13 @@ def messanger():
 
     logout_url = url_for('auth.logout', _external=True)
 
+    if request.method == "POST":
+        print("POST method")
+
     return render_template("messanger.html",
-                           chats=chats,
-                           current_user_info=current_user_info,
-                           logout_url=logout_url)
+                            chats=chats,
+                            current_user_info=current_user_info,
+                            logout_url=logout_url)
 
 @socketio.on('connect')
 def connect():
