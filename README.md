@@ -87,3 +87,8 @@ In it find line
 for example: `* Running on http://127.0.0.1:5000`
 
 Copy <local_server_addres> and open it in your browser
+
+## HTML rendering support
+![image](https://github.com/user-attachments/assets/8a7dab59-c90e-4684-bdf8-163bc1830062)
+* Image sending support
+* Text side support
