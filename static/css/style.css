@@ -198,7 +198,7 @@ label{
 .message *{
     word-break: break-all;
     text-align: justify;
-    padding: 20px;
+    padding:0;
     max-width: 400px;
     min-width:20px;
     margin: 10px;
@@ -209,12 +209,14 @@ label{
     float:left;
     border: 1px solid var(--lesya_Ukraine);
     border-radius:0 20px 20px 20px;
+    padding:10px;
     background-color:var(--maringova_bruise);
 }
 
 .right{
     border: 1px solid var(--concrete);
     float:right;
+    padding:10px;
     border-radius:20px 20px 0 20px;
     background-color: var(--lesya_Ukraine);
 }
@@ -295,6 +297,8 @@ label{
 
 .data{
     font-size:10px;
+    display: flex;
+    flex-wrap: nowrap;
     padding: 0;
     color:var(--casper);
     float:right;
@@ -349,3 +353,14 @@ label{
 .is_in_internet{
     color:var(--lesya_Ukraine);
     font-size:20pt;}
+
+.text{
+    display: inline-block;
+    margin:0;
+}
+.date1{
+    display: inline-block;
+    float:left;
+    margin:0;
+    padding:0;
+}

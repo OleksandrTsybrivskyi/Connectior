@@ -23,12 +23,9 @@
 
 </head>
     <body>
+
         <script>
-        function open_chat(id) {
-            alert(id);
-            io().emit('open_chat',{'chat_id':id});
-            return false
-        }
+
         io().on('chat_open_responce', function(messages)
         {
 
@@ -87,15 +84,9 @@
                     <input name="sent_message" id="sent_message_input" placeholder="your message"><input value="" type="submit" id="sent_message_icon">
                 </form>
             </div>
-            <div class="message">
-            <div class="left">Жо́вква — місто в Україні з населенням 13 тисяч мешканців у північній частині Львівського району, центр громади. Поселення засноване у 1368 році. Міські права отримало 1603 року. Відоме як місто ремісників. У XVII столітті Жовква була резиденцією короля Речі Посполитої Яна III Собеського. Наприкінці XVII — на початку XVIII століть славилася художня школа і школа різьблення по дереву.<h6 class="data"><br>27-11-23<img class="message_icon" src="../static/imgs/message_read_icon.png" >
-                </h6></div></div>
-            <div class="message">
-                <div class="right">f <h6 class="data"><br>27-11-23 <img class="message_icon" src="../static/imgs/message_read_icon.png" ></h6></div>
-            </div></div>
+            </div>
         <div id="setting">
             <img id="setting_icon" src="../static/imgs/user_icon.png">
-            <p class="setting_txt">Name: kjxk,h</p>
             <p class="setting_txt">First name: rkufci</p>
             <p class="setting_txt">Last name: ehrmj</p>
             <p class="setting_txt">Nickname: hhaj</p>
@@ -111,8 +102,53 @@
         {
             document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             document.cookie = "theme=1";
-            ch_theme();
+            ch_theme();}
+
+        function fill_setting(date){
+            let name = document.getElementsByClassName("setting_txt")
+            name[0].innerHTML = None
+
         }
+
+        function fill_messages(date) {
+            for(let i =0 ; i < date.length ; i++){
+                var messageDiv = document.createElement('div');
+                messageDiv.className = 'message';
+                var leftDiv = document.createElement('div');
+                var textDiv = document.createElement('div');
+                textDiv.className = 'text';
+                textDiv.innerHTML = date[i].body
+                var h6Element = document.createElement('h6');
+                h6Element.className = 'data';
+                var brElement = document.createElement('br');
+                h6Element.appendChild(brElement);
+                var data1Div = document.createElement('div');
+                data1Div.className = 'data1';
+                data1Div.innerHTML = date[i].send_time
+                h6Element.appendChild(data1Div);
+                if(date[i].message_my){
+                    leftDiv.className = 'right';
+                    var imgElement = document.createElement('img');
+                imgElement.className = 'message_icon';
+                if(date[i].viewed){
+                    imgElement.src = '../static/imgs/message_read_icon.png';
+                } else {
+                    imgElement.src = '../static/imgs/message_read_icon.png';
+                }
+                } else{
+                    leftDiv.className = 'left';}
+
+                h6Element.appendChild(imgElement);
+                h6Element.appendChild(brElement);
+                leftDiv.appendChild(textDiv);
+                leftDiv.appendChild(h6Element);
+                messageDiv.appendChild(leftDiv);
+                var chatContainer = document.getElementById('chat');
+                chatContainer.appendChild(messageDiv);
+            }}
+
+fill_messages(date);
+
     </script>
     </body>
 </html>
