@@ -87,7 +87,7 @@ def messanger():
                            current_user_info=current_user_info,
                            logout_url=logout_url)
 
-@socketio.on('connect')
+@socketio.om('connect')
 def connect():
     '''
     Send all users chat_id's to client
