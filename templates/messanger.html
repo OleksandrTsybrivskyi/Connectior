@@ -8,7 +8,10 @@
 
 
         function send_message(){
-            var message = document.getElementById("sent_message_input").value
+            var message_ob = document.getElementById("sent_message_input")
+            var message = message_ob.value
+            message_ob.value = ""
+
             data = {
                 "id": chatter,
                 "message": message
@@ -136,9 +139,7 @@
 
         <div id="chat">
             <div id="sent_message">
-                <form method="post">
-                    <input name="sent_message" id="sent_message_input" placeholder="your message"><input value="" type="button" onclick="send_message()" id="sent_message_icon">
-                </form>
+                <input name="sent_message" id="sent_message_input" placeholder="your message"><input value="" type="button" onclick="send_message()" id="sent_message_icon">
             </div>
             </div>
         <div id="setting">
@@ -162,11 +163,11 @@
 
 
         var inputElement1 = document.getElementById('search');
-        var inputElement2 = document.getElementById('#sent_message_input');
-        if (inputElement1) {
+        var inputElement2 = document.getElementById('sent_message_input');
+        if (inputElement1) { 
             inputElement1.addEventListener('keydown', function(event) {
         if (event.keyCode === 13) {
-            console.log(inputElement.value)
+            console.log(inputElement1.value)
         }
         });
         } else {
@@ -177,10 +178,7 @@
         if (event.keyCode === 13) {
             send_message()
         }
-        });
-        } else {
-            console.error('Елемент з id "search" не знайдений.');
-        }
+        });}
     </script>
     </body>
 </html>
