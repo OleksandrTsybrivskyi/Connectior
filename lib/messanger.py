@@ -12,26 +12,22 @@ bp = Blueprint('messanger', __name__)
 
 @bp.route('/messanger', methods=('GET', 'POST'))
 def messanger():
-
     if session.get('user_id') is None:
         return redirect(url_for('auth.login'))
 
     db = get_db()
-
     if request.method == "POST":
         sent_message = request.form["sent_message"]
-        oppenned_chat_id = None #TODO oppened_chat_id must be an id of a current chat
+        oppenned_chat_id = 5 #TODO oppened_chat_id must be an id of a current chat
 
         db.execute("INSERT INTO messages(sender_id, chat_id, body) VALUES (?, ?, ?)", 
                 (session["user_id"], oppenned_chat_id, sent_message,),)
         db.commit()
-        last_message_id = db.execute("SELECT id FROM messages WHERE sender_id = ? ORDER BY send_time DESC",
-                                     (session["user_id"])).fetchone()["id"]
+        last_message_id = db.execute("SELECT * FROM messages WHERE sender_id = ? ORDER BY send_time DESC",
+                (session["user_id"],)).fetchone()["id"]
         db.execute("UPDATE chats SET last_message_id = ? WHERE id = ?", 
                 (last_message_id, oppenned_chat_id))
         db.commit()
-
-        redirect(url_for('messanger.messanger'))
 
     
     chat_rows = db.execute(
@@ -54,7 +50,7 @@ def messanger():
             last_message = ""
         else:
             last_message = db.execute("SELECT * FROM messages WHERE id = ?;",
-                                   (chat_row['last_message_id'])).fetchone()['body']
+                                   (chat_row['last_message_id'],)).fetchone()['body']
             if len(last_message) > 20:
                 last_message = last_message[:17] + '...'
 
@@ -134,22 +130,22 @@ def handle_custom_event(data):
     emit('chat_open_responce', responce)
 
 
-@bp.route('/post', methods=('GET', 'POST'))
-def post():
-    db = get_db()
+# @bp.route('/post', methods=('GET', 'POST'))
+# def post():
+#     db = get_db()
 
-    sent_message = request.args.get('sent_message')
-    oppenned_chat_id = None
+#     sent_message = request.args.get('sent_message')
+#     oppenned_chat_id = None
 
-    db.execute("INSERT INTO messages(sender_id, chat_id, body) VALUES (?, ?, ?)", 
-               (session["user_id"], oppenned_chat_id, sent_message,),)
-    db.commit()
-    last_message_id = db.execute("SELECT LAST_INSERT_ID()")
-    db.execute("UPDATE chats SET last_message_id = ? WHERE id = ?", 
-               (last_message_id, oppenned_chat_id))
-    db.commit()
+#     db.execute("INSERT INTO messages(sender_id, chat_id, body) VALUES (?, ?, ?)", 
+#                (session["user_id"], oppenned_chat_id, sent_message,),)
+#     db.commit()
+#     last_message_id = db.execute("SELECT LAST_INSERT_ID()")
+#     db.execute("UPDATE chats SET last_message_id = ? WHERE id = ?", 
+#                (last_message_id, oppenned_chat_id))
+#     db.commit()
 
-    redirect(url_for('messanger.messanger'))
+#     redirect(url_for('messanger.messanger'))
 
 
 
