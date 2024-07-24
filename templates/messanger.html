@@ -26,6 +26,16 @@
                 socket.emit('my event', {data: 'I\'m connected!'})
             });
         })
+        socket.on('chat_ids', function(response)
+        {
+            ar = response[ids];
+            for(var i = 0;i < ar.length();i++)
+                joinRoom()
+        })
+        socket.on('receive_message', function()
+        {
+            open_chat(chatter)
+        })
         socket.on('chat_open_responce', function(date)
         {
             var messages = document.getElementsByClassName("message");
