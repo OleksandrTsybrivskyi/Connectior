@@ -146,23 +146,24 @@ def send_message(data):
     opened_chat_id = data["id"]
     sent_message = data["message"]
 
-    db.execute("INSERT INTO messages(sender_id, chat_id, body) VALUES (?, ?, ?)", 
-            (session["user_id"], opened_chat_id, sent_message,),)
-    db.commit()
-    last_message_id = db.execute("SELECT * FROM messages WHERE sender_id = ? ORDER BY send_time DESC",
-            (session["user_id"],)).fetchone()["id"]
+    if sent_message != "":
+        db.execute("INSERT INTO messages(sender_id, chat_id, body) VALUES (?, ?, ?)", 
+                (session["user_id"], opened_chat_id, sent_message,),)
+        db.commit()
+        last_message_id = db.execute("SELECT * FROM messages WHERE sender_id = ? ORDER BY send_time DESC",
+                (session["user_id"],)).fetchone()["id"]
 
 
-    db.execute("UPDATE chats SET last_message_id = ? WHERE id = ?", 
-            (last_message_id, opened_chat_id))
-    db.commit()
+        db.execute("UPDATE chats SET last_message_id = ? WHERE id = ?", 
+                (last_message_id, opened_chat_id))
+        db.commit()
 
-    chat = db.execute("SELECT * FROM chats WHERE id = ?", (opened_chat_id,)).fetchone()
-    other_user_id = chat["user_1"] if chat["user_1"] != session["user_id"] else chat["user_2"]
+        chat = db.execute("SELECT * FROM chats WHERE id = ?", (opened_chat_id,)).fetchone()
+        other_user_id = chat["user_1"] if chat["user_1"] != session["user_id"] else chat["user_2"]
+        
     
- 
-    emit('receive_message', to=session["user_id"])
-    emit('receive_message', to=other_user_id)
+        emit('receive_message', to=session["user_id"])
+        emit('receive_message', to=other_user_id)
 
     # emit('receive_message', to=opened_chat_id)
 
