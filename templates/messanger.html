@@ -9,7 +9,11 @@
 
         function send_message(){
             var message = document.getElementById("sent_message_input")
-            socket.emit('send_message',(chatter, message))
+            data = {
+                "id": chatter,
+                "message": message
+            }
+            socket.emit('send_message',data)
         }
         var socket = io();
         $(document).ready(function() {
