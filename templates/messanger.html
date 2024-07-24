@@ -8,10 +8,10 @@
 
 
         function send_message(){
-            alert("ok")
             var message_ob = document.getElementById("sent_message_input")
             var message = message_ob.value
-            message_ob.innerHTML = ""
+            message_ob.value = ""
+
             data = {
                 "id": chatter,
                 "message": message
