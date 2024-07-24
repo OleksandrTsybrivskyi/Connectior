@@ -14,6 +14,11 @@
         })
         socket.on('chat_open_responce', function(date)
         {
+            var messages = document.getElementsByClassName("message");
+            var messagesArray = Array.from(messages);
+            messagesArray.forEach(function(message) {
+                message.remove();});
+            date = date["messages"]
             for(let i =0 ; i < date.length ; i++){
                 var messageDiv = document.createElement('div');
                 messageDiv.className = 'message';
