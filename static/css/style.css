@@ -366,3 +366,20 @@ label{
     margin:0;
     padding:0;
 }
+
+#smiles_conteiner{
+    display:block;
+    position:fixed;
+    bottom:10px;
+    left:calc(20% + 10px);
+    top:calc(80% - 40px);
+    width: 200px;
+    height:50px;
+    overflow-y:auto;
+    overflow-x: hidden;
+    cursor: pointer;
+    margin-bottom:30px;
+}
+.smile{
+    display: inline-block;
+}

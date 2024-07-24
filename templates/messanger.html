@@ -83,6 +83,7 @@
     <body>
 
         <script>
+
         function open_chat(id)
         {
             chatter = id;
@@ -139,8 +140,12 @@
 
         <div id="chat">
             <div id="sent_message">
+                <div id="smiles_conteiner">
+
+                </div>
                 <input name="sent_message" id="sent_message_input" placeholder="your message"><input value="" type="button" onclick="send_message()" id="sent_message_icon">
             </div>
+
             </div>
         <div id="setting">
             <img id="setting_icon" src="../static/imgs/user_icon.png">
@@ -179,6 +184,21 @@
             send_message()
         }
         });}
+        var emojis = ['😊', '😂', '😍', '😘', '😁', '🙂', '🤣', '😎', '🥰', '🥳', '🤩', '😄', '🤗', '🤭', '😇', '🤔', '🙃', '😋', '😆', '😏', '😜', '😝', '😤', '😢', '😭', '😱', '😳', '😬', '😵', '🤯', '🥺', '😷', '🤒', '🤕', '🤢', '🤮', '🤧', '🥴', '🤠', '🥱', '😴', '😪', '🤤', '😈', '👿', '👻', '💀', '☠️', '👽', '🤖'];
+
+        var container = document.getElementById('smiles_conteiner');
+
+
+emojis.forEach(function(emoji) {
+    var div = document.createElement('div');
+    div.className = 'smile';
+    div.textContent = emoji;
+    div.setAttribute('onclick', 'add_smile(this)');
+    container.appendChild(div);
+});
+function add_smile(this_element){
+              document.getElementById("sent_message_input").value += this_element.innerHTML
+          }
     </script>
     </body>
 </html>
