@@ -1,7 +1,7 @@
 from flask import Blueprint
 from threading import Lock
 from flask import Flask, render_template, session, url_for, redirect, request
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room, leave_room,rooms
 from app import socketio
 from datetime import datetime
 
@@ -91,16 +91,10 @@ def connect():
         WHERE user_1 = ? OR user_2 = ?
         """, (session['user_id'], session['user_id'],))
     
-    chat_ids = []
 
     for chat_row in chat_rows:
-        chat_ids.append(chat_row['id'])
-
-    response = {
-        "ids": chat_ids
-    }
-
-    emit('chat_ids', response)
+        join_room(chat_row['id'])
+        
 
 @socketio.on('open_chat')
 def open_chat(data):
@@ -140,7 +134,6 @@ def open_chat(data):
         'messages': messages
     }
 
-    print(response)
 
     emit('chat_open_responce', response)
 
@@ -167,5 +160,40 @@ def send_message(data):
             (last_message_id, opened_chat_id))
     db.commit()
  
-    data = {"chat_id" : data["id"]}
-    open_chat(data=data)
+    emit('receive_message', to=opened_chat_id)
+    print(opened_chat_id)
+
+    # data = {"chat_id" : data["id"]}
+    # open_chat(data=data)
+
+
+@socketio.on('search_users')
+def search_users(data):
+    '''
+    Search user
+    '''
+
+    db = get_db()
+
+    search_prompt = data["search_prompt"]
+
+    if "@" in search_prompt:
+        results = db.execute("SELECT * FROM users WHERE nickname LIKE ?",
+               ("%"+search_prompt+"%",)).fetchall()
+    else:
+        results = set()
+        search_prompt_mass = search_prompt.split()
+        for search_prompt_mass_element in search_prompt_mass:
+            results_partial = db.execute("SELECT * FROM users WHERE first_name LIKE ?",
+                ("%"+search_prompt_mass_element+"%",)).fetchall()
+            for results_partial_element in results_partial:
+                results.add(results_partial_element)
+        for search_prompt_mass_element in search_prompt_mass:
+            results_partial = db.execute("SELECT * FROM users WHERE last_name LIKE ?",
+                ("%"+search_prompt_mass_element+"%",)).fetchall()
+            for results_partial_element in results_partial:
+                results.add(results_partial_element)
+        results = list(results)
+    
+    return results
+    
