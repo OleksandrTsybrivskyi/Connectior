@@ -69,8 +69,6 @@ def messanger():
 
     logout_url = url_for('auth.logout', _external=True)
 
-    if request.method == "POST":
-        print("POST method")
 
     return render_template("messanger.html",
                             chats=chats,
@@ -83,17 +81,17 @@ def connect():
     Send all users chat_id's to client
     '''
 
-    db = get_db()
+    # db = get_db()
 
-    chat_rows = db.execute(
-        """
-        SELECT * FROM chats
-        WHERE user_1 = ? OR user_2 = ?
-        """, (session['user_id'], session['user_id'],))
+    # chat_rows = db.execute(
+    #     """
+    #     SELECT * FROM chats
+    #     WHERE user_1 = ? OR user_2 = ?
+    #     """, (session['user_id'], session['user_id'],)).fetchall()
     
 
-    for chat_row in chat_rows:
-        join_room(chat_row['id'])
+    # for chat_row in chat_rows:
+    join_room(session['user_id'])
         
 
 @socketio.on('open_chat')
@@ -101,7 +99,6 @@ def open_chat(data):
     '''
     Recieve "chat_id" from client
     '''
-    print('Received data:', data)
 
     db = get_db()
     
@@ -134,7 +131,6 @@ def open_chat(data):
         'messages': messages
     }
 
-
     emit('chat_open_responce', response)
 
 
@@ -155,13 +151,20 @@ def send_message(data):
     db.commit()
     last_message_id = db.execute("SELECT * FROM messages WHERE sender_id = ? ORDER BY send_time DESC",
             (session["user_id"],)).fetchone()["id"]
-    print(last_message_id)
+
+
     db.execute("UPDATE chats SET last_message_id = ? WHERE id = ?", 
             (last_message_id, opened_chat_id))
     db.commit()
+
+    chat = db.execute("SELECT * FROM chats WHERE id = ?", (opened_chat_id,)).fetchone()
+    other_user_id = chat["user_1"] if chat["user_1"] != session["user_id"] else chat["user_2"]
+    
  
-    emit('receive_message', to=opened_chat_id)
-    print(opened_chat_id)
+    emit('receive_message', to=session["user_id"])
+    emit('receive_message', to=other_user_id)
+
+    # emit('receive_message', to=opened_chat_id)
 
     # data = {"chat_id" : data["id"]}
     # open_chat(data=data)

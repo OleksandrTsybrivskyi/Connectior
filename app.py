@@ -14,7 +14,7 @@ app.config.from_mapping(
     SECRET_KEY='dev',
     DATABASE=db.DATABASE_PATH,
 )
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode=None)
 
 os.makedirs(app.instance_path, exist_ok=True)
 

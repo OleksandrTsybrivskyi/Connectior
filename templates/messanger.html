@@ -33,17 +33,22 @@
                 joinRoom()
         })
         socket.on('receive_message', function()
-        {
+        { 
             open_chat(chatter)
         })
         socket.on('chat_open_responce', function(date)
         {
+            
             var messages = document.getElementsByClassName("message");
             var messagesArray = Array.from(messages);
             messagesArray.forEach(function(message) {
                 message.remove();});
             date = date["messages"]
+
+            temp_nazar = "1"
+            
             for(let i =0 ; i < date.length ; i++){
+                temp_nazar += date[i].body
                 var messageDiv = document.createElement('div');
                 messageDiv.className = 'message';
                 var leftDiv = document.createElement('div');
@@ -70,7 +75,6 @@
                 } else{
                     leftDiv.className = 'left';}
 
-                h6Element.appendChild(imgElement);
                 h6Element.appendChild(brElement);
                 leftDiv.appendChild(textDiv);
                 leftDiv.appendChild(h6Element);
