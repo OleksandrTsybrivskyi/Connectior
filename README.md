@@ -21,7 +21,7 @@ Watch project preview [here](https://www.youtube.com/).
 ### Clone git repository
 Go to desired directory and clone git repository 
 ```bash
-git clone https://github.com/OleksandrTsybrivskyi/Connectior.git
+git clone https://github.com/OleksandrTsybrivskyi/Kodova_Bryhada.git
 ```
 Navigate to project directory
 ```bash
@@ -82,13 +82,13 @@ You can run Connectior
 After that you must see some output.
 In it find line
 ```bash
-* Running on <local_server_addres>
+* Running on <server_addres>
 ```
 for example: `* Running on http://127.0.0.1:5000`
 
-Copy <local_server_addres> and open it in your browser
+Copy <server_addres> and open it in your browser
 
 ## HTML rendering support
 ![image](https://github.com/user-attachments/assets/8a7dab59-c90e-4684-bdf8-163bc1830062)
 * Image sending support
-* Text side support
+* Text size support
