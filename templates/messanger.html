@@ -98,7 +98,7 @@
         {
             chatter = id;
             socket.emit('open_chat', {'chat_id': id})
-            document.getElementById("sent_message").style.display = 'block';
+            document.getElementById("sent_message").style.display = 'flex';
         }
 
         function ch_theme() {
@@ -153,6 +153,7 @@
                 <div id="smiles_conteiner">
 
                 </div>
+                <img id="smile_icon" src="../static/imgs/smile_icon.png" onclick="smile_menu()">
                 <input name="sent_message" id="sent_message_input" placeholder="your message"><input value="" type="button" onclick="send_message()" id="sent_message_icon">
             </div>
 
@@ -209,6 +210,14 @@ emojis.forEach(function(emoji) {
 function add_smile(this_element){
               document.getElementById("sent_message_input").value += this_element.innerHTML
           }
+function smile_menu(){
+    var menu = document.getElementById("smiles_conteiner")
+    if(menu.style.display == "none") {
+        menu.style.display = "block";
+    }else{
+        menu.style.display = "none";}
+
+}
     </script>
     </body>
 </html>
