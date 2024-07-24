@@ -23,12 +23,9 @@
 
 </head>
     <body>
+
         <script>
-        function open_chat(id) {
-            alert(id);
-            io().emit('open_chat',{'chat_id':id});
-            return false
-        }
+
         io().on('chat_open_responce', function(messages)
         {
 
@@ -88,11 +85,36 @@
                 </form>
             </div>
             <div class="message">
-            <div class="left">Жо́вква — місто в Україні з населенням 13 тисяч мешканців у північній частині Львівського району, центр громади. Поселення засноване у 1368 році. Міські права отримало 1603 року. Відоме як місто ремісників. У XVII столітті Жовква була резиденцією короля Речі Посполитої Яна III Собеського. Наприкінці XVII — на початку XVIII століть славилася художня школа і школа різьблення по дереву.<h6 class="data"><br>27-11-23<img class="message_icon" src="../static/imgs/message_read_icon.png" >
+            <div class="left"><div class="text"></div><h6 class="data"><br><div class="data1"></div><img class="message_icon" src="../static/imgs/message_read_icon.png" >
                 </h6></div></div>
             <div class="message">
-                <div class="right">f <h6 class="data"><br>27-11-23 <img class="message_icon" src="../static/imgs/message_read_icon.png" ></h6></div>
-            </div></div>
+            <div class="left"><div class="text"></div><h6 class="data"><br><div class="data1"></div><img class="message_icon" src="../static/imgs/message_read_icon.png" >
+                </h6></div></div>
+            <div class="message">
+            <div class="left"><div class="text"></div><h6 class="data"><br><div class="data1"></div><img class="message_icon" src="../static/imgs/message_read_icon.png" >
+                </h6></div></div>
+            <div class="message">
+            <div class="left"><div class="text"></div><h6 class="data"><br><div class="data1"></div><img class="message_icon" src="../static/imgs/message_read_icon.png" >
+                </h6></div></div>
+            <div class="message">
+            <div class="left"><div class="text"></div><h6 class="data"><br><div class="data1"></div><img class="message_icon" src="../static/imgs/message_read_icon.png" >
+                </h6></div></div>
+            <div class="message">
+            <div class="left"><div class="text"></div><h6 class="data"><br><div class="data1"></div><img class="message_icon" src="../static/imgs/message_read_icon.png" >
+                </h6></div></div>
+            <div class="message">
+            <div class="left"><div class="text"></div><h6 class="data"><br><div class="data1"></div><img class="message_icon" src="../static/imgs/message_read_icon.png" >
+                </h6></div></div>
+            <div class="message">
+            <div class="left"><div class="text"></div><h6 class="data"><br><div class="data1"></div><img class="message_icon" src="../static/imgs/message_read_icon.png" >
+                </h6></div></div>
+            <div class="message">
+            <div class="left"><div class="text"></div><h6 class="data"><br><div class="data1"></div><img class="message_icon" src="../static/imgs/message_read_icon.png" >
+                </h6></div></div>
+            <div class="message">
+            <div class="left"><div class="text"></div><h6 class="data"><br><div class="data1"></div><img class="message_icon" src="../static/imgs/message_read_icon.png" >
+                </h6></div></div>
+            </div>
         <div id="setting">
             <img id="setting_icon" src="../static/imgs/user_icon.png">
             <p class="setting_txt">Name: kjxk,h</p>
@@ -111,8 +133,37 @@
         {
             document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             document.cookie = "theme=1";
-            ch_theme();
+            ch_theme();}
+
+        function fill_setting(date){
+            let name = document.getElementsByClassName("setting_txt")
+            name[0].innerHTML = None
+
         }
+
+        function fill_messages(data) {
+    let messages = document.getElementsByClassName('message');
+
+    for (let i = 0; i < data.length; i++) {
+        let textElement = messages[i].getElementsByClassName('text')[0];
+        let dateElement = messages[i].getElementsByClassName('data1')[0];
+        let positionElement = messages[i].getElementsByClassName('left')[0];
+
+        textElement.innerHTML = data[i].body;
+        dateElement.innerHTML = data[i].sent_time;
+
+        if (data[i].message_my) {
+            positionElement.classList.remove('left');
+            positionElement.classList.add('right');
+        } else {
+            positionElement.classList.remove('right');
+            positionElement.classList.add('left');
+        }
+    }
+}
+
+fill_messages(data);
+
     </script>
     </body>
 </html>
