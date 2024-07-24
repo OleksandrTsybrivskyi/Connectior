@@ -177,24 +177,21 @@
             document.cookie = "theme=1";
             ch_theme();}
 
+            var inputElement1 = document.getElementById('search');
+            var inputElement2 = document.getElementById('sent_message_input');
 
-        var inputElement1 = document.getElementById('search');
-        var inputElement2 = document.getElementById('sent_message_input');
+            document.addEventListener('keydown', function(event) {
+    if (event.keyCode === 13) {
         if (inputElement1) { 
-            inputElement1.addEventListener('keydown', function(event) {
-        if (event.keyCode === 13) {
-            emit('search_users', inputElement1.value)
-        }
-        });
-        } else {
-            console.error('Елемент з id "search" не знайдений.');
+            socket.emit('search_users', inputElement1.value);
+            
         }
         if (inputElement2) {
-            inputElement2.addEventListener('keydown', function(event) {
-        if (event.keyCode === 13) {
-            send_message()
+            send_message();
         }
-        });}
+    }
+});
+        
         var emojis = ['😊', '😂', '😍', '😘', '😁', '🙂', '🤣', '😎', '🥰', '🥳', '🤩', '😄', '🤗', '🤭', '😇', '🤔', '🙃', '😋', '😆', '😏', '😜', '😝', '😤', '😢', '😭', '😱', '😳', '😬', '😵', '🤯', '🥺', '😷', '🤒', '🤕', '🤢', '🤮', '🤧', '🥴', '🤠', '🥱', '😴', '😪', '🤤', '😈', '👿', '👻', '💀', '☠️', '👽', '🤖'];
 
         var container = document.getElementById('smiles_conteiner');

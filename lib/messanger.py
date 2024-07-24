@@ -1,6 +1,6 @@
 from flask import Blueprint
 from threading import Lock
-from flask import Flask, render_template, session, url_for, redirect, request
+from flask import Flask, render_template, session, url_for, redirect, request, flash
 from flask_socketio import SocketIO, emit, join_room, leave_room,rooms
 from app import socketio
 from datetime import datetime
@@ -150,50 +150,44 @@ def send_message(data):
     opened_chat_id = data["id"]
     sent_message = data["message"]
 
-    db.execute("INSERT INTO messages(sender_id, chat_id, body) VALUES (?, ?, ?)", 
-            (session["user_id"], opened_chat_id, sent_message,),)
-    db.commit()
-    last_message_id = db.execute("SELECT * FROM messages WHERE sender_id = ? ORDER BY send_time DESC",
-            (session["user_id"],)).fetchone()["id"]
-    print(last_message_id)
-    db.execute("UPDATE chats SET last_message_id = ? WHERE id = ?", 
-            (last_message_id, opened_chat_id))
-    db.commit()
- 
-    emit('receive_message', to=opened_chat_id)
-    print(opened_chat_id)
+    if sent_message != "":
+
+        db.execute("INSERT INTO messages(sender_id, chat_id, body) VALUES (?, ?, ?)", 
+                (session["user_id"], opened_chat_id, sent_message,),)
+        db.commit()
+        last_message_id = db.execute("SELECT * FROM messages WHERE sender_id = ? ORDER BY send_time DESC",
+                (session["user_id"],)).fetchone()["id"]
+        print(last_message_id)
+        db.execute("UPDATE chats SET last_message_id = ? WHERE id = ?", 
+                (last_message_id, opened_chat_id))
+        db.commit()
+    
+        emit('receive_message', to=opened_chat_id)
+        print(opened_chat_id)
 
     # data = {"chat_id" : data["id"]}
     # open_chat(data=data)
 
 
 @socketio.on('search_users')
-def search_users(data):
+def search_users(search_prompt):
     '''
     Search user
     '''
 
     db = get_db()
 
-    search_prompt = data["search_prompt"]
+    result = db.execute("SELECT * FROM users WHERE nickname = ?",
+            (search_prompt,)).fetchone()
+    if result is not None:
+        res_1 = db.execute("SELECT * FROM chats WHERE user_1 = ? AND user_2 = ?",
+                (session["user_id"], result["id"],)).fetchone()
+        res_2 = db.execute("SELECT * FROM chats WHERE user_1 = ? AND user_2 = ?",
+                (result["id"], session["user_id"],)).fetchone()
+        if res_1 == None and res_2 == None and session["user_id"] != result["id"]:
+            print(result["id"])
+            db.execute("INSERT INTO chats(user_1, user_2) VALUES (?, ?)", 
+                (session["user_id"], result["id"],),)
+            db.commit()
 
-    if "@" in search_prompt:
-        results = db.execute("SELECT * FROM users WHERE nickname LIKE ?",
-               ("%"+search_prompt+"%",)).fetchall()
-    else:
-        results = set()
-        search_prompt_mass = search_prompt.split()
-        for search_prompt_mass_element in search_prompt_mass:
-            results_partial = db.execute("SELECT * FROM users WHERE first_name LIKE ?",
-                ("%"+search_prompt_mass_element+"%",)).fetchall()
-            for results_partial_element in results_partial:
-                results.add(results_partial_element)
-        for search_prompt_mass_element in search_prompt_mass:
-            results_partial = db.execute("SELECT * FROM users WHERE last_name LIKE ?",
-                ("%"+search_prompt_mass_element+"%",)).fetchall()
-            for results_partial_element in results_partial:
-                results.add(results_partial_element)
-        results = list(results)
-    
-    return results
-    
+    return redirect(url_for('messanger.messanger'))
