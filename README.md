@@ -8,7 +8,7 @@ This project was created during the final stage of the all-Ukrainian team progra
 ---
 
 ## Video demo
-Watch project preview [here](https://www.youtube.com/).
+Watch project preview [here](https://drive.google.com/drive/folders/1C1CzDB7BA3Qcnoj7ICbYm62AcWAzBbKn).
 
 ---
 
