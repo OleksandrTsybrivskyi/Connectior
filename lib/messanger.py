@@ -10,13 +10,29 @@ from lib.db import get_db
 bp = Blueprint('messanger', __name__)
 
 
-@bp.route('/messanger')
+@bp.route('/messanger', methods=('GET', 'POST'))
 def messanger():
 
     if session.get('user_id') is None:
         return redirect(url_for('auth.login'))
 
     db = get_db()
+
+    if request.method == "POST":
+        sent_message = request.form["sent_message"]
+        oppenned_chat_id = None #TODO oppened_chat_id must be an id of a current chat
+
+        db.execute("INSERT INTO messages(sender_id, chat_id, body) VALUES (?, ?, ?)", 
+                (session["user_id"], oppenned_chat_id, sent_message,),)
+        db.commit()
+        last_message_id = db.execute("SELECT id FROM messages WHERE sender_id = ? ORDER BY send_time DESC",
+                                     (session["user_id"])).fetchone()["id"]
+        db.execute("UPDATE chats SET last_message_id = ? WHERE id = ?", 
+                (last_message_id, oppenned_chat_id))
+        db.commit()
+
+        redirect(url_for('messanger.messanger'))
+
     
     chat_rows = db.execute(
         """
