@@ -87,8 +87,33 @@ def messanger():
                            current_user_info=current_user_info,
                            logout_url=logout_url)
 
+@socketio.om('connect')
+def connect():
+    '''
+    Send all users chat_id's to client
+    '''
+
+    db = get_db()
+
+    chat_rows = db.execute(
+        """
+        SELECT * FROM chats
+        WHERE user_1 = ? OR user_2 = ?
+        """, (session['user_id'], session['user_id'],))
+    
+    chat_ids = []
+
+    for chat_row in chat_rows:
+        chat_ids.append(chat_row['id'])
+
+    response = {
+        "ids": chat_ids
+    }
+
+    emit('chat_ids', response)
+
 @socketio.on('open_chat')
-def handle_custom_event(data):
+def open_chat(data):
     '''
     Recieve "chat_id" from client
     '''
@@ -121,13 +146,13 @@ def handle_custom_event(data):
             'send_time': send_time
         })
         
-    responce = {
+    response = {
         'messages': messages
     }
 
-    print(responce)
+    print(response)
 
-    emit('chat_open_responce', responce)
+    emit('chat_open_responce', response)
 
 
 # @bp.route('/post', methods=('GET', 'POST'))

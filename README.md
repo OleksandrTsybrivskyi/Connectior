@@ -29,10 +29,14 @@ cd Connectior
 ```
 
 ### Create virtual environment
-Create virtual environment `.venv`
+Create virtual environment `.venv` using command
 ```bash
 python -m venv .venv
 ```
+or by running script files:
+* `create_environment.sh` for Linux Based OS and Mac-OS
+* `create_environment.bat` for Windows
+
 Activate vertual environment
 
 * For Linux Based OS and Mac-OS
@@ -51,7 +55,7 @@ pip install Flask flask-socketio
 ```
 
 ### Create database and run
-> Before run this commands make sure that you have installed all needed python modules and have activated correct environment in this terminal 
+> Before run this commands make sure that you have installed all needed python modules and have activated correct environment in current terminal 
 
 Create database
 ```bash
