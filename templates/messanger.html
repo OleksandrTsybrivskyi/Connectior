@@ -4,8 +4,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
     <script type="text/javascript"  charset="utf-8">
+        var chatter = ''
         function send_message(){
-            var message = document.getElementById("sent_message_input")
+            var message = document.getElementById("sent_message_input").value
+            alert(1);
         }
         var socket = io();
         $(document).ready(function() {
@@ -74,6 +76,7 @@
         <script>
         function open_chat(id)
         {
+            chatter = id
             socket.emit('open_chat', {'chat_id': id})
         }
         function ch_theme() {
