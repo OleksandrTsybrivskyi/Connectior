@@ -170,3 +170,35 @@ def send_message(data):
  
     # data = {"chat_id" : data["id"]}
     # open_chat(data=data)
+
+
+@socketio.on('search_users')
+def search_users(data):
+    '''
+    Search user
+    '''
+
+    db = get_db()
+
+    search_prompt = data["search_prompt"]
+
+    if "@" in search_prompt:
+        results = db.execute("SELECT * FROM users WHERE nickname LIKE ?",
+               ("%"+search_prompt+"%",)).fetchall()
+    else:
+        results = set()
+        search_prompt_mass = search_prompt.split()
+        for search_prompt_mass_element in search_prompt_mass:
+            results_partial = db.execute("SELECT * FROM users WHERE first_name LIKE ?",
+                ("%"+search_prompt_mass_element+"%",)).fetchall()
+            for results_partial_element in results_partial:
+                results.add(results_partial_element)
+        for search_prompt_mass_element in search_prompt_mass:
+            results_partial = db.execute("SELECT * FROM users WHERE last_name LIKE ?",
+                ("%"+search_prompt_mass_element+"%",)).fetchall()
+            for results_partial_element in results_partial:
+                results.add(results_partial_element)
+        results = list(results)
+    
+    return results
+    
