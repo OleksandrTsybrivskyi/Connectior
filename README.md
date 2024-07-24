@@ -28,14 +28,19 @@ Navigate to project directory
 cd Connectior 
 ```
 
+You can init Connectior using scripts:
+* `init_connectior.sh` for Linux Based OS and Mac-OS
+* `init_connectior.bat` for Windows
+and go to [Run Connectior](#run-connectior) section.
+
+Or setup it manually by following next steps
+
 ### Create virtual environment
+
 Create virtual environment `.venv` using command
 ```bash
 python -m venv .venv
 ```
-or by running script files:
-* `create_environment.sh` for Linux Based OS and Mac-OS
-* `create_environment.bat` for Windows
 
 Activate vertual environment
 
@@ -54,7 +59,7 @@ Install python modules
 pip install Flask flask-socketio
 ```
 
-### Create database and run
+### Create database
 > Before run this commands make sure that you have installed all needed python modules and have activated correct environment in current terminal 
 
 Create database
@@ -62,42 +67,23 @@ Create database
 python database.py create
 ```
 
-Run local server
-```bash
-python run.py
-```
+### Run Connectior
+You can run Connectior
+* Using scripts:
+    * `run_connectior.sh` for Linux Based OS and Mac-OS
+    * `run_connectior.bat` for Windows
 
+* Or do it manually by running this in terminal
+    > Before run this commands make sure that you have installed all needed python modules and have activated correct environment in current terminal 
+    ```bash
+    python run.py
+    ```
 
-# Dependencies
-Create python environment
+After that you must see some output.
+In it find line
 ```bash
-python -m venv .venv
+* Running on <local_server_addres>
 ```
-Install pip dependencies
-```bash
-pip install Flask flask-socketio
-```
+for example: `* Running on http://127.0.0.1:5000`
 
-# Run
-```bash
-python run.py
-```
-
-# Database
-## Create database
-```bash
-python database.py create
-```
-## Fill database with test data
-```bash
-python database.py fill
-```
-## Delete database file
-```bash
-python database.py delete
-```
-## Reset database
-Delete and create a new empty one
-```bash
-python database.py reset
-```
+Copy <local_server_addres> and open it in your browser
