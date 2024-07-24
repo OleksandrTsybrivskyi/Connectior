@@ -16,18 +16,18 @@ def messanger():
         return redirect(url_for('auth.login'))
 
     db = get_db()
-    if request.method == "POST":
-        sent_message = request.form["sent_message"]
-        oppenned_chat_id = 5 #TODO oppened_chat_id must be an id of a current chat
+    # if request.method == "POST":
+    #     sent_message = request.form["sent_message"]
+    #     oppenned_chat_id = 5 #TODO oppened_chat_id must be an id of a current chat
 
-        db.execute("INSERT INTO messages(sender_id, chat_id, body) VALUES (?, ?, ?)", 
-                (session["user_id"], oppenned_chat_id, sent_message,),)
-        db.commit()
-        last_message_id = db.execute("SELECT * FROM messages WHERE sender_id = ? ORDER BY send_time DESC",
-                (session["user_id"],)).fetchone()["id"]
-        db.execute("UPDATE chats SET last_message_id = ? WHERE id = ?", 
-                (last_message_id, oppenned_chat_id))
-        db.commit()
+    #     db.execute("INSERT INTO messages(sender_id, chat_id, body) VALUES (?, ?, ?)", 
+    #             (session["user_id"], oppenned_chat_id, sent_message,),)
+    #     db.commit()
+    #     last_message_id = db.execute("SELECT * FROM messages WHERE sender_id = ? ORDER BY send_time DESC",
+    #             (session["user_id"],)).fetchone()["id"]
+    #     db.execute("UPDATE chats SET last_message_id = ? WHERE id = ?", 
+    #             (last_message_id, oppenned_chat_id))
+    #     db.commit()
 
     
     chat_rows = db.execute(
@@ -153,6 +153,50 @@ def open_chat(data):
     print(response)
 
     emit('chat_open_responce', response)
+
+
+@socketio.on('send_message')
+def send_message(data):
+    '''
+    Send message into the chat
+    '''
+    print(1)
+    print(data)
+    print(1)
+
+
+    db = get_db()
+
+    sent_message = data.chatter
+    oppenned_chat_id = data.message
+
+    db.execute("INSERT INTO messages(sender_id, chat_id, body) VALUES (?, ?, ?)", 
+            (session["user_id"], oppenned_chat_id, sent_message,),)
+    db.commit()
+    last_message_id = db.execute("SELECT * FROM messages WHERE sender_id = ? ORDER BY send_time DESC",
+            (session["user_id"],)).fetchone()["id"]
+    db.execute("UPDATE chats SET last_message_id = ? WHERE id = ?", 
+            (last_message_id, oppenned_chat_id))
+    db.commit()
+
+    # chat_rows = db.execute(
+    #     """
+    #     SELECT * FROM chats
+    #     WHERE user_1 = ? OR user_2 = ?
+    #     """, (session['user_id'], session['user_id'],))
+    
+    # chat_ids = []
+
+    # for chat_row in chat_rows:
+    #     chat_ids.append(chat_row['id'])
+
+    # response = {
+    #     "ids": chat_ids
+    # }
+    # data = {"chat_id" : chatter}
+    # open_chat(data=data)
+
+    
 
 
 # @bp.route('/post', methods=('GET', 'POST'))
